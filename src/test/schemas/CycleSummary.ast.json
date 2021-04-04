@@ -1,0 +1,59 @@
+{
+  "name": "CycleSummary",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "startDate"
+    },
+    {
+      "type": "string",
+      "required": true,
+      "name": "endDate"
+    },
+    {
+      "type": "number",
+      "required": true,
+      "name": "nCycle"
+    },
+    {
+      "type": "number",
+      "required": true,
+      "name": "cycleLength"
+    },
+    {
+      "type": "number",
+      "required": true,
+      "name": "mensLength"
+    },
+    {
+      "type": "number",
+      "name": "ovulationCD"
+    },
+    {
+      "type": "string",
+      "name": "ovulationDate"
+    },
+    {
+      "type": "number",
+      "name": "spottingDays"
+    },
+    {
+      "type": "number",
+      "name": "lhTestPositive"
+    },
+    {
+      "type": "number",
+      "name": "lhTestNegative"
+    },
+    {
+      "type": "number",
+      "name": "unprotectedSex"
+    },
+    {
+      "type": "string",
+      "name": "pregnancyEndDate"
+    }
+  ]
+}

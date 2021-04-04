@@ -1,0 +1,52 @@
+{
+  "name": "BaseColorCode",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "date"
+    },
+    {
+      "type": "UFColor",
+      "required": true,
+      "name": "color"
+    },
+    {
+      "type": "number",
+      "name": "redscale"
+    },
+    {
+      "type": "UFCode",
+      "required": true,
+      "name": "code"
+    },
+    {
+      "type": "number",
+      "required": true,
+      "name": "cd"
+    },
+    {
+      "type": "number",
+      "required": true,
+      "name": "nCycle"
+    },
+    {
+      "type": "Goal",
+      "required": true,
+      "name": "goal"
+    },
+    {
+      "type": "LHStatus",
+      "name": "lhStatus"
+    },
+    {
+      "type": "OvulationStatus",
+      "name": "ovulationStatus"
+    },
+    {
+      "type": "PregnancyTestStatus",
+      "name": "pregnancyTestStatus"
+    }
+  ]
+}

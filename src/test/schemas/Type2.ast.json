@@ -1,0 +1,10 @@
+{
+  "name": "Type2",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "name": "s"
+    }
+  ]
+}

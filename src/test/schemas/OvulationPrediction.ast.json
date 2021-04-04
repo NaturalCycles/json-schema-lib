@@ -1,0 +1,18 @@
+{
+  "name": "OvulationPrediction",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "OVULATION",
+      "v": " 'OVULATION'"
+    },
+    {
+      "k": "WINDOW1",
+      "v": " 'WINDOW1'"
+    },
+    {
+      "k": "WINDOW2",
+      "v": " 'WINDOW2'"
+    }
+  ]
+}

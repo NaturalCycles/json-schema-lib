@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "UserFertilityStats.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "lowTempMean": {
+      "type": "number"
+    },
+    "lowTempRMS": {
+      "type": "number"
+    },
+    "highTempMean": {
+      "type": "number"
+    },
+    "highTempRMS": {
+      "type": "number"
+    },
+    "pregTempMean": {
+      "type": "number"
+    },
+    "pregTempRMS": {
+      "type": "number"
+    }
+  }
+}

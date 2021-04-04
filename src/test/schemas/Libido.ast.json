@@ -1,0 +1,18 @@
+{
+  "name": "Libido",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "LOW",
+      "v": 1
+    },
+    {
+      "k": "MEDIUM",
+      "v": 2
+    },
+    {
+      "k": "HIGH",
+      "v": 3
+    }
+  ]
+}

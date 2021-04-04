@@ -1,0 +1,15 @@
+{
+  "name": "SuperAddress",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "address3"
+    }
+  ],
+  "extends": [
+    "BaseAddress",
+    "Person"
+  ]
+}

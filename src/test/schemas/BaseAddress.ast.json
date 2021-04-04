@@ -1,0 +1,71 @@
+{
+  "name": "BaseAddress",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "address1"
+    },
+    {
+      "type": "string",
+      "name": "address2"
+    },
+    {
+      "type": "number",
+      "name": "ts",
+      "descr": "asdf\n\nla la la",
+      "validationType": "unixTimestamp"
+    },
+    {
+      "type": "number",
+      "name": "int",
+      "validationType": "integer"
+    },
+    {
+      "type": "boolean",
+      "name": "home"
+    },
+    {
+      "type": "array",
+      "arrayOfType": "string",
+      "name": "a1"
+    },
+    {
+      "type": "array",
+      "arrayOfType": {
+        "type": "array",
+        "arrayOfType": "string"
+      },
+      "name": "a2"
+    },
+    {
+      "type": "object",
+      "properties": [
+        {
+          "type": "string",
+          "required": true,
+          "name": "a"
+        },
+        {
+          "type": "number",
+          "required": true,
+          "name": "b"
+        }
+      ],
+      "name": "o1"
+    },
+    {
+      "type": "Person",
+      "name": "p"
+    },
+    {
+      "type": "Consent",
+      "name": "c"
+    },
+    {
+      "type": "NumberEnum",
+      "name": "n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "UFColorCode",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "cycleStartDate"
+    }
+  ],
+  "extends": [
+    "BaseColorCode"
+  ]
+}

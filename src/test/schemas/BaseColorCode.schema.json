@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "BaseColorCode.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "color": {
+      "$ref": "UFColor.schema.json"
+    },
+    "redscale": {
+      "type": "number"
+    },
+    "code": {
+      "$ref": "UFCode.schema.json"
+    },
+    "cd": {
+      "type": "number"
+    },
+    "nCycle": {
+      "type": "number"
+    },
+    "goal": {
+      "$ref": "Goal.schema.json"
+    },
+    "lhStatus": {
+      "$ref": "LHStatus.schema.json"
+    },
+    "ovulationStatus": {
+      "$ref": "OvulationStatus.schema.json"
+    },
+    "pregnancyTestStatus": {
+      "$ref": "PregnancyTestStatus.schema.json"
+    }
+  },
+  "required": [
+    "date",
+    "color",
+    "code",
+    "cd",
+    "nCycle",
+    "goal"
+  ]
+}

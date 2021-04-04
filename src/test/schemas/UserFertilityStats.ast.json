@@ -1,0 +1,30 @@
+{
+  "name": "UserFertilityStats",
+  "type": "object",
+  "properties": [
+    {
+      "type": "number",
+      "name": "lowTempMean"
+    },
+    {
+      "type": "number",
+      "name": "lowTempRMS"
+    },
+    {
+      "type": "number",
+      "name": "highTempMean"
+    },
+    {
+      "type": "number",
+      "name": "highTempRMS"
+    },
+    {
+      "type": "number",
+      "name": "pregTempMean"
+    },
+    {
+      "type": "number",
+      "name": "pregTempRMS"
+    }
+  ]
+}

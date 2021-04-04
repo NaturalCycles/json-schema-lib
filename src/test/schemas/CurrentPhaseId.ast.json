@@ -1,0 +1,26 @@
+{
+  "name": "CurrentPhaseId",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "PERIOD",
+      "v": 1
+    },
+    {
+      "k": "FOLLICULAR",
+      "v": 2
+    },
+    {
+      "k": "OVULATION",
+      "v": 3
+    },
+    {
+      "k": "OVULATION_WAITING",
+      "v": 4
+    },
+    {
+      "k": "LUTEAL",
+      "v": 5
+    }
+  ]
+}

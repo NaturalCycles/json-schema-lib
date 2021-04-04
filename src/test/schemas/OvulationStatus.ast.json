@@ -1,0 +1,30 @@
+{
+  "name": "OvulationStatus",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "OVU_CONFIRMED",
+      "v": 1
+    },
+    {
+      "k": "OVU_NOT_CONFIRMED",
+      "v": 2
+    },
+    {
+      "k": "OVU_WAITING",
+      "v": 3
+    },
+    {
+      "k": "OVU_PREDICTION",
+      "v": 4
+    },
+    {
+      "k": "OVU_DAY",
+      "v": 5
+    },
+    {
+      "k": "ANOVULATORY",
+      "v": 6
+    }
+  ]
+}

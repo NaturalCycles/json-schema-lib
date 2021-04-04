@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "TestType.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "s": {
+      "type": "string"
+    },
+    "n": {
+      "type": "null"
+    },
+    "s2": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "p": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "Person.schema.json"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "lhdays": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    }
+  },
+  "required": [
+    "s",
+    "n",
+    "s2",
+    "p",
+    "lhdays"
+  ]
+}

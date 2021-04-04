@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "UFCode.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "checkLh": {
+      "type": "boolean"
+    },
+    "checkPreg": {
+      "type": "boolean"
+    },
+    "defMisc": {
+      "type": "boolean"
+    },
+    "defPreg": {
+      "type": "boolean"
+    },
+    "mens": {
+      "type": "boolean"
+    },
+    "ovulation": {
+      "type": "boolean",
+      "description": "Confirmed ovulation (if in the past).\nIn the future - we don't use it:)"
+    },
+    "ovulationPrediction": {
+      "$ref": "OvulationPrediction.schema.json"
+    },
+    "possMisc": {
+      "type": "boolean"
+    },
+    "possPreg": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Mens",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "MENSTRUATION",
+      "v": 1
+    },
+    {
+      "k": "SPOTTING",
+      "v": 2
+    }
+  ]
+}

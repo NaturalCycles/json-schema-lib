@@ -1,0 +1,22 @@
+{
+  "name": "DataQuantity",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "NONE",
+      "v": 1
+    },
+    {
+      "k": "LIGHT",
+      "v": 2
+    },
+    {
+      "k": "MEDIUM",
+      "v": 3
+    },
+    {
+      "k": "HEAVY",
+      "v": 4
+    }
+  ]
+}

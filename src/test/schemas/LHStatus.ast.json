@@ -1,0 +1,30 @@
+{
+  "name": "LHStatus",
+  "type": "enum",
+  "enumItems": [
+    {
+      "k": "LH_PREDICTION",
+      "v": 1
+    },
+    {
+      "k": "LH_NEG_PRE_OVU_CONFIRMED",
+      "v": 2
+    },
+    {
+      "k": "LH_POS_PRE_OVU_CONFIRMED",
+      "v": 3
+    },
+    {
+      "k": "LH_NEG_OVU_DAY",
+      "v": 4
+    },
+    {
+      "k": "LH_POS_OVU_CONFIRMED",
+      "v": 5
+    },
+    {
+      "k": "LH_POS_OVU_NOT_CONFIRMED",
+      "v": 6
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "UserFertility.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "lowTempMean": {
+      "type": "number"
+    },
+    "lowTempRMS": {
+      "type": "number"
+    },
+    "highTempMean": {
+      "type": "number"
+    },
+    "highTempRMS": {
+      "type": "number"
+    },
+    "pregTempMean": {
+      "type": "number"
+    },
+    "pregTempRMS": {
+      "type": "number"
+    },
+    "v": {
+      "type": "number"
+    },
+    "algoVersion": {
+      "type": "string"
+    },
+    "fahrenheit": {
+      "type": "boolean",
+      "description": "Can be undefined in older versions of UserFertilityCache!"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "todayDate": {
+      "type": "string"
+    },
+    "lastDate": {
+      "type": "string"
+    },
+    "conceptionDate": {
+      "type": "string"
+    },
+    "dueDate": {
+      "type": "string"
+    },
+    "minPossiblePregnancyEndedDate": {
+      "type": "string"
+    },
+    "greenDays": {
+      "type": "number"
+    },
+    "redDays": {
+      "type": "number"
+    },
+    "yellowDays": {
+      "type": "number"
+    },
+    "dataActivity": {
+      "type": "number"
+    },
+    "noOCycles": {
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      }
+    },
+    "cycleLengths": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "ovulationDays": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "predOvulationDays": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "ovulationWindowMin": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "ovulationWindowMax": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "mensLengths": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "cycleSummaries": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "CycleSummary.schema.json"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "currentPhase": {
+      "$ref": "CurrentPhase.schema.json"
+    },
+    "lhdays": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "clave": {
+      "type": "number"
+    },
+    "claveRMS": {
+      "type": "number"
+    },
+    "greenbfO": {
+      "type": "number"
+    },
+    "lpave": {
+      "type": "number"
+    },
+    "lpaveRMS": {
+      "type": "number"
+    },
+    "mdays": {
+      "type": "number"
+    },
+    "mdaysRMS": {
+      "type": "number"
+    },
+    "ncycles": {
+      "type": "number"
+    },
+    "oave": {
+      "type": "number"
+    },
+    "oaveRMS": {
+      "type": "number"
+    },
+    "pregnantNow": {
+      "type": "boolean"
+    },
+    "entryMap": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "$ref": "DailyEntryBM.schema.json"
+        }
+      }
+    },
+    "colorMap": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "$ref": "UFColorCode.schema.json"
+        }
+      }
+    },
+    "predictionMap": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "$ref": "UFPredictionColorCode.schema.json"
+        }
+      }
+    }
+  },
+  "required": [
+    "v",
+    "startDate",
+    "todayDate",
+    "lastDate",
+    "greenDays",
+    "redDays",
+    "yellowDays",
+    "dataActivity",
+    "noOCycles",
+    "cycleLengths",
+    "ovulationDays",
+    "predOvulationDays",
+    "ovulationWindowMin",
+    "ovulationWindowMax",
+    "mensLengths",
+    "lhdays",
+    "clave",
+    "claveRMS",
+    "greenbfO",
+    "lpave",
+    "lpaveRMS",
+    "mdays",
+    "ncycles",
+    "oave",
+    "oaveRMS",
+    "pregnantNow",
+    "entryMap",
+    "colorMap",
+    "predictionMap"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "TestType",
+  "type": "object",
+  "properties": [
+    {
+      "type": "string",
+      "required": true,
+      "name": "s"
+    },
+    {
+      "type": "null",
+      "required": true,
+      "name": "n"
+    },
+    {
+      "type": [
+        "string",
+        "null"
+      ],
+      "required": true,
+      "name": "s2"
+    },
+    {
+      "type": "array",
+      "arrayOfType": [
+        "Person",
+        "null"
+      ],
+      "required": true,
+      "name": "p"
+    },
+    {
+      "type": "array",
+      "arrayOfType": {
+        "type": "tuple",
+        "tupleTypes": [
+          "number",
+          "number"
+        ]
+      },
+      "required": true,
+      "name": "lhdays"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "DailyEntryBM.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "updated": {
+      "type": "number"
+    },
+    "temperatureUpdatedTimestamp": {
+      "type": "number"
+    },
+    "temperatureMeasuredTimestamp": {
+      "type": "number"
+    },
+    "deviationReason": {
+      "$ref": "DeviationReason.schema.json"
+    },
+    "skipped": {
+      "type": "boolean"
+    },
+    "temperature": {
+      "type": "number"
+    },
+    "lhTest": {
+      "$ref": "TestResult.schema.json"
+    },
+    "pregTest": {
+      "$ref": "TestResult.schema.json"
+    },
+    "mens": {
+      "$ref": "Mens.schema.json"
+    },
+    "sex": {
+      "$ref": "HadSex.schema.json"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "dataFlags": {
+      "type": "array",
+      "items": {
+        "$ref": "DataFlag.schema.json"
+      }
+    },
+    "mensQuantity": {
+      "$ref": "DataQuantity.schema.json"
+    },
+    "cervicalMucusConsistency": {
+      "$ref": "CervicalMucusConsistency.schema.json"
+    },
+    "cervicalMucusQuantity": {
+      "$ref": "DataQuantity.schema.json"
+    },
+    "sexType": {
+      "$ref": "SexType.schema.json"
+    },
+    "libido": {
+      "$ref": "Libido.schema.json"
+    },
+    "covidTest": {
+      "$ref": "TestResult.schema.json"
+    }
+  },
+  "required": [
+    "date",
+    "dataFlags"
+  ]
+}
