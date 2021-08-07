@@ -38,6 +38,16 @@ export function tsParseSourceFile(file: ts.SourceFile): CommonObjectType[] {
       }
 
       types.push(t)
+    } else if (ts.isTypeAliasDeclaration(n)) {
+      const type = typeNodeToCommonType(n.type) as string | string[]
+
+      const t: CommonObjectType = {
+        name: n.name.text,
+        type,
+        ...parseJsdoc(n),
+      }
+
+      types.push(t)
     } else if (ts.isEnumDeclaration(n)) {
       const enumItems: EnumItem[] = n.members.map(m => {
         _assert(ts.isIdentifier(m.name), `enum name !isIdentifier`)

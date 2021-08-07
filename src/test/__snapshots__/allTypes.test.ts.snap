@@ -516,6 +516,10 @@ la la la",
     "type": "object",
   },
   Object {
+    "name": "AirtableId",
+    "type": "string",
+  },
+  Object {
     "enumItems": Array [
       Object {
         "k": "RED",
@@ -1670,6 +1674,11 @@ la la la",
       "lhdays",
     ],
     "type": "object",
+  },
+  Object {
+    "$id": "AirtableId.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "string",
   },
   Object {
     "$id": "UFColor.schema.json",

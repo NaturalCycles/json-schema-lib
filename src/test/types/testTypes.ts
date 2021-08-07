@@ -67,3 +67,7 @@ export interface TestType {
 export interface ShouldBeExcluded {
   e: string
 }
+
+// Should support types too
+// eslint-disable-next-line unused-imports/no-unused-vars
+export type AirtableId<T = any> = string
