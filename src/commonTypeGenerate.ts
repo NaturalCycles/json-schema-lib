@@ -1,14 +1,11 @@
-import { pMap } from '@naturalcycles/js-lib'
+import { pMap, StringMap, _stringMapValues } from '@naturalcycles/js-lib'
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
 import Ajv from 'ajv'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
-import * as ts from 'typescript'
 import { CommonTypeCfg } from './commonTypeCfg'
-import { createJsonSchemas } from './jsonSchemaGenerator'
-import { CommonObjectType } from './model'
 import { resourcesDir } from './paths'
-import { tsParseSourceFile } from './tsParser'
+import { JsonSchema, tsFileToJsonSchemas } from './tsToJsonSchema'
 
 const commonTypeCfgSchema = new AjvSchema<CommonTypeCfg>(
   fs.readJsonSync(`${resourcesDir}/CommonTypeCfg.schema.json`),
@@ -21,7 +18,7 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
   // Validate cfg (dog-fooding)
   commonTypeCfgSchema.validate(cfg)
 
-  const { paths, outputDir, writeAST, includeTypes, excludeTypes } = cfg
+  const { paths, outputDir, includeSchemas, excludeSchemas } = cfg
 
   fs.ensureDirSync(outputDir)
 
@@ -32,60 +29,64 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
     return console.log('nothing to do, exiting')
   }
 
-  let types: CommonObjectType[] = []
+  const schemaMap: StringMap<JsonSchema> = {}
   let errors = 0
 
   files.forEach(filePath => {
     try {
-      const node = ts.createSourceFile(
-        filePath,
-        fs.readFileSync(filePath, 'utf8'),
-        ts.ScriptTarget.Latest,
-      )
+      const fileString = fs.readFileSync(filePath, 'utf8')
+      const schemas = tsFileToJsonSchemas(fileString, filePath)
 
-      const newTypes = tsParseSourceFile(node)
-      console.log(`${filePath}: ${newTypes.length} type(s) parsed`)
-      types.push(...newTypes)
+      console.log(`${filePath}: ${schemas.length} schemas(s) generated`)
+      schemas.forEach(s => {
+        if (schemaMap[s.$id!]) {
+          console.warn(
+            `!!! ${s.$id} duplicated in ${filePath}, it will override previous schema with same $id`,
+          )
+        }
+        schemaMap[s.$id!] = s
+      })
     } catch (err) {
       errors++
       console.log(`${filePath} ts parse error:`, err)
     }
   })
 
-  console.log(`${types.length} type(s) parsed, ${errors} errors`)
+  console.log(`${Object.keys(schemaMap).length} schema(s) generated, ${errors} errors`)
 
   // todo: process include/exclude types
-  if (includeTypes?.length) {
-    const includeRegexes = includeTypes.map(s => new RegExp(s))
-    types = types.filter(t => includeRegexes.some(reg => reg.test(t.name!)))
-  }
-
-  if (excludeTypes?.length) {
-    const excludeRegexes = excludeTypes.map(s => new RegExp(s))
-    types = types.filter(t => !excludeRegexes.some(reg => reg.test(t.name!)))
-  }
-
-  if (includeTypes || excludeTypes) {
-    console.log(`${types.length} type(s) after inclusion/exclusion filters`)
-  }
-
-  if (!types.length) {
-    return console.log(`no schemas to write, exiting`)
-  }
-
-  if (writeAST) {
-    await pMap(types, async t => {
-      await fs.writeJson(`${outputDir}/${t.name!}.ast.json`, t, { spaces: 2 })
+  if (includeSchemas?.length) {
+    const includeRegexes = includeSchemas.map(s => new RegExp(s))
+    Object.keys(schemaMap).forEach(name => {
+      if (!includeRegexes.some(reg => reg.test(name))) {
+        delete schemaMap[name]
+      }
     })
   }
 
-  const schemas = createJsonSchemas(types)
+  if (excludeSchemas?.length) {
+    const excludeRegexes = excludeSchemas.map(s => new RegExp(s))
+    Object.keys(schemaMap).forEach(name => {
+      if (excludeRegexes.some(reg => reg.test(name))) {
+        delete schemaMap[name]
+      }
+    })
+  }
+
+  const schemas = _stringMapValues(schemaMap)
+  if (includeSchemas || excludeSchemas) {
+    console.log(`${schemas.length} type(s) after inclusion/exclusion filters`)
+  }
+
+  if (!schemas.length) {
+    return console.log(`no schemas to write, exiting`)
+  }
 
   await pMap(schemas, async schema => {
     await fs.writeJson(`${outputDir}/${schema.$id}`, schema, { spaces: 2 })
   })
 
-  console.log(`${schemas.length} json schemas created`)
+  console.log(`${schemas.length} json schema(s) saved`)
 
   // validate schemas with ajv
 
@@ -100,4 +101,16 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
       console.error(`ajv compile error on ${schema.$id}`, err)
     }
   })
+}
+
+// Used mostly for debugging
+export function generateSchemasFromFilePaths(filePaths: string[]): JsonSchema[] {
+  const schemas: JsonSchema[] = []
+
+  filePaths.forEach(filePath => {
+    const fileString = fs.readFileSync(filePath, 'utf8')
+    schemas.push(...tsFileToJsonSchemas(fileString, filePath))
+  })
+
+  return schemas
 }

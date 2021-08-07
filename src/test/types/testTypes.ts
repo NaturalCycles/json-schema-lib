@@ -64,6 +64,7 @@ export interface TestType {
   lit?: 'some string'
   nlit?: 26
   litb?: true
+  intersect?: Person & { id: string }
 }
 
 // Should be excluded by test filters

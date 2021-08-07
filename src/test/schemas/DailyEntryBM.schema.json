@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "DailyEntryBM.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "date": {
       "type": "string"
@@ -71,5 +70,6 @@
   "required": [
     "date",
     "dataFlags"
-  ]
+  ],
+  "additionalProperties": false
 }

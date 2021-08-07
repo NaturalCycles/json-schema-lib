@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "UFCode.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "checkLh": {
       "type": "boolean"
@@ -24,7 +23,8 @@
       "description": "Confirmed ovulation (if in the past).\nIn the future - we don't use it:)"
     },
     "ovulationPrediction": {
-      "$ref": "OvulationPrediction.schema.json"
+      "$ref": "OvulationPrediction.schema.json",
+      "description": "Frontend-only field to display \"OvulationWindow'."
     },
     "possMisc": {
       "type": "boolean"
@@ -32,5 +32,7 @@
     "possPreg": {
       "type": "boolean"
     }
-  }
+  },
+  "required": [],
+  "additionalProperties": false
 }

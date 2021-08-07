@@ -2,34 +2,29 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "CommonTypeCfg.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "paths": {
       "type": "array",
-      "description": "Array of paths to scan interfaces in.\nGlobs are allowed (using `globby` package).\n\nBy default, all found exported Interfaces and Enums will be used.\nSpecify includeList/excludeList to limit this.",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "Array of paths to scan interfaces in.\nGlobs are allowed (using `globby` package).\n\nBy default, all found exported Interfaces and Enums will be used.\nSpecify includeList/excludeList to limit this."
     },
     "outputDir": {
       "type": "string",
       "description": "Dir to write json schemas to.\nWill be auto-created if doesn't exist.\nAll schemas will be placed flat in this one dir (no sub-dirs will be created)."
     },
-    "includeTypes": {
+    "includeSchemas": {
       "type": "array",
       "items": {
         "type": "string"
       }
     },
-    "excludeTypes": {
+    "excludeSchemas": {
       "type": "array",
       "items": {
         "type": "string"
       }
-    },
-    "writeAST": {
-      "type": "boolean",
-      "description": "Set to true to output `${name}.ast.json` files aka CommonType AST.\nNote! CommonType AST is unstable/experimental and subject to change!"
     },
     "debug": {
       "type": "boolean",
@@ -39,5 +34,6 @@
   "required": [
     "paths",
     "outputDir"
-  ]
+  ],
+  "additionalProperties": false
 }

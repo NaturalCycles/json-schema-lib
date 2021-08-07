@@ -2,8 +2,8 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "Goal.schema.json",
   "enum": [
-    " 'PREVENT'",
-    " 'PLAN'",
-    " 'PREGNANT'"
+    "PREVENT",
+    "PLAN",
+    "PREGNANT"
   ]
 }

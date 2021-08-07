@@ -1,79 +1,24 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "SuperAddress.schema.json",
-  "type": "object",
-  "description": "Person type comment",
-  "additionalProperties": true,
-  "properties": {
-    "address1": {
-      "type": "string"
-    },
-    "address2": {
-      "type": "string"
-    },
-    "ts": {
-      "type": "number",
-      "description": "asdf\n\nla la la"
-    },
-    "int": {
-      "type": "integer"
-    },
-    "home": {
-      "type": "boolean"
-    },
-    "a1": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "a2": {
-      "type": "array",
-      "items": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      }
-    },
-    "o1": {
+  "allOf": [
+    {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
-        "a": {
+        "address3": {
           "type": "string"
-        },
-        "b": {
-          "type": "number"
         }
       },
       "required": [
-        "a",
-        "b"
-      ]
+        "address3"
+      ],
+      "additionalProperties": false
     },
-    "p": {
+    {
+      "$ref": "BaseAddress.schema.json"
+    },
+    {
       "$ref": "Person.schema.json"
-    },
-    "c": {
-      "$ref": "Consent.schema.json"
-    },
-    "n": {
-      "$ref": "NumberEnum.schema.json"
-    },
-    "name": {
-      "type": "string"
-    },
-    "age": {
-      "type": "number"
-    },
-    "address3": {
-      "type": "string"
     }
-  },
-  "required": [
-    "address1",
-    "name",
-    "address3"
   ]
 }

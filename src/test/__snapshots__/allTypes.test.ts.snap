@@ -3,1300 +3,6 @@
 exports[`allTypes 1`] = `
 Array [
   Object {
-    "name": "DailyEntryBM",
-    "properties": Array [
-      Object {
-        "name": "date",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "updated",
-        "type": "number",
-      },
-      Object {
-        "name": "temperatureUpdatedTimestamp",
-        "type": "number",
-      },
-      Object {
-        "name": "temperatureMeasuredTimestamp",
-        "type": "number",
-      },
-      Object {
-        "name": "deviationReason",
-        "type": "DeviationReason",
-      },
-      Object {
-        "name": "skipped",
-        "type": "boolean",
-      },
-      Object {
-        "name": "temperature",
-        "type": "number",
-      },
-      Object {
-        "name": "lhTest",
-        "type": "TestResult",
-      },
-      Object {
-        "name": "pregTest",
-        "type": "TestResult",
-      },
-      Object {
-        "name": "mens",
-        "type": "Mens",
-      },
-      Object {
-        "name": "sex",
-        "type": "HadSex",
-      },
-      Object {
-        "name": "notes",
-        "type": "string",
-      },
-      Object {
-        "name": "source",
-        "type": "string",
-      },
-      Object {
-        "arrayOfType": "DataFlag",
-        "name": "dataFlags",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "name": "mensQuantity",
-        "type": "DataQuantity",
-      },
-      Object {
-        "name": "cervicalMucusConsistency",
-        "type": "CervicalMucusConsistency",
-      },
-      Object {
-        "name": "cervicalMucusQuantity",
-        "type": "DataQuantity",
-      },
-      Object {
-        "name": "sexType",
-        "type": "SexType",
-      },
-      Object {
-        "name": "libido",
-        "type": "Libido",
-      },
-      Object {
-        "name": "covidTest",
-        "type": "TestResult",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "MOOD_HAPPY",
-        "v": 1,
-      },
-      Object {
-        "k": "MOOD_CONFIDENT",
-        "v": 2,
-      },
-      Object {
-        "k": "MOOD_CALM",
-        "v": 3,
-      },
-      Object {
-        "k": "MOOD_ENERGETIC",
-        "v": 4,
-      },
-      Object {
-        "k": "MOOD_EXCITED",
-        "v": 5,
-      },
-      Object {
-        "k": "MOOD_PMS",
-        "v": 6,
-      },
-      Object {
-        "k": "MOOD_SWINGS",
-        "v": 7,
-      },
-      Object {
-        "k": "MOOD_IRRITABLE",
-        "v": 8,
-      },
-      Object {
-        "k": "MOOD_ANXIOUS",
-        "v": 9,
-      },
-      Object {
-        "k": "MOOD_STRESSED",
-        "v": 10,
-      },
-      Object {
-        "k": "MOOD_TIRED",
-        "v": 11,
-      },
-      Object {
-        "k": "MOOD_SENSITIVE",
-        "v": 12,
-      },
-      Object {
-        "k": "MOOD_NUMB",
-        "v": 13,
-      },
-      Object {
-        "k": "MOOD_SAD",
-        "v": 14,
-      },
-      Object {
-        "k": "MOOD_ANGRY",
-        "v": 15,
-      },
-      Object {
-        "k": "MOOD_FORGETFUL",
-        "v": 16,
-      },
-      Object {
-        "k": "MOOD_NAUSEOUS",
-        "v": 17,
-      },
-      Object {
-        "k": "MOOD_SICK",
-        "v": 18,
-      },
-      Object {
-        "k": "MOOD_CRAVINGS",
-        "v": 19,
-      },
-      Object {
-        "k": "MOOD_SENSITIVE_TO_SMELL",
-        "v": 20,
-      },
-      Object {
-        "k": "MOOD_EXHAUSTED",
-        "v": 21,
-      },
-      Object {
-        "k": "PAIN_CRAMPS",
-        "v": 22,
-      },
-      Object {
-        "k": "PAIN_BACKACHE",
-        "v": 23,
-      },
-      Object {
-        "k": "PAIN_SORE_BREASTS",
-        "v": 24,
-      },
-      Object {
-        "k": "PAIN_OVULATION",
-        "v": 25,
-      },
-      Object {
-        "k": "PAIN_HEADACHE",
-        "v": 26,
-      },
-      Object {
-        "k": "PAIN_OTHER",
-        "v": 27,
-      },
-      Object {
-        "k": "PAIN_HEARTBURN",
-        "v": 28,
-      },
-      Object {
-        "k": "PAIN_PELVIC",
-        "v": 29,
-      },
-      Object {
-        "k": "PAIN_SWELLING",
-        "v": 30,
-      },
-      Object {
-        "k": "PAIN_CONTRACTIONS",
-        "v": 45,
-      },
-      Object {
-        "k": "MORE_EMERGENCY_PILL",
-        "v": 31,
-      },
-      Object {
-        "k": "MORE_EMERGENCY_IUD",
-        "v": 32,
-      },
-      Object {
-        "k": "DEVIATION_REASON_OTHER",
-        "v": 40,
-      },
-      Object {
-        "k": "DEVIATION_REASON_SLEEP",
-        "v": 41,
-      },
-      Object {
-        "k": "DEVIATION_REASON_ALCOHOL",
-        "v": 42,
-      },
-      Object {
-        "k": "DEVIATION_REASON_SICK",
-        "v": 43,
-      },
-      Object {
-        "k": "DEVIATION_REASON_ALGO",
-        "v": 44,
-      },
-      Object {
-        "k": "COVID_DRY_COUGH",
-        "v": 46,
-      },
-      Object {
-        "k": "COVID_SHORT_BREATH",
-        "v": 47,
-      },
-      Object {
-        "k": "COVID_FATIGUE",
-        "v": 48,
-      },
-      Object {
-        "k": "COVID_SORE_THROAT",
-        "v": 49,
-      },
-      Object {
-        "k": "COVID_DIARRHEA",
-        "v": 50,
-      },
-      Object {
-        "k": "COVID_MUSCLE_PAIN",
-        "v": 51,
-      },
-      Object {
-        "k": "COVID_HEADACHE",
-        "v": 52,
-      },
-      Object {
-        "k": "COVID_LOSS_TASTE_SMELL",
-        "v": 53,
-      },
-      Object {
-        "k": "OURA_ADJUSTED_TEMPERATURE",
-        "v": 54,
-      },
-      Object {
-        "k": "OURA_IRREGULAR_SLEEP",
-        "v": 55,
-      },
-      Object {
-        "k": "OURA_INCOMPLETE_DATA",
-        "v": 56,
-      },
-      Object {
-        "k": "OURA_ALCOHOL",
-        "v": 57,
-      },
-      Object {
-        "k": "OURA_SICK",
-        "v": 58,
-      },
-    ],
-    "name": "DataFlag",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "OTHER",
-        "v": -1,
-      },
-      Object {
-        "k": "ALGO",
-        "v": 1,
-      },
-      Object {
-        "k": "SLEEP",
-        "v": 2,
-      },
-      Object {
-        "k": "ALCOHOL",
-        "v": 3,
-      },
-      Object {
-        "k": "SICK",
-        "v": 4,
-      },
-    ],
-    "name": "DeviationReason",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "YES",
-        "v": " 'YES'",
-      },
-      Object {
-        "k": "NO",
-        "v": " 'NO'",
-      },
-    ],
-    "name": "Consent",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "YES",
-        "v": 1,
-      },
-      Object {
-        "k": "NO",
-        "v": 2,
-      },
-    ],
-    "name": "NumberEnum",
-    "type": "enum",
-  },
-  Object {
-    "additionalProperties": true,
-    "descr": "Person type comment",
-    "name": "Person",
-    "properties": Array [
-      Object {
-        "name": "name",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "age",
-        "type": "number",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "BaseAddress",
-    "properties": Array [
-      Object {
-        "name": "address1",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "address2",
-        "type": "string",
-      },
-      Object {
-        "descr": "asdf
-
-la la la",
-        "name": "ts",
-        "type": "number",
-        "validationType": "unixTimestamp",
-      },
-      Object {
-        "name": "int",
-        "type": "number",
-        "validationType": "integer",
-      },
-      Object {
-        "name": "home",
-        "type": "boolean",
-      },
-      Object {
-        "arrayOfType": "string",
-        "name": "a1",
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Object {
-          "arrayOfType": "string",
-          "type": "array",
-        },
-        "name": "a2",
-        "type": "array",
-      },
-      Object {
-        "name": "o1",
-        "properties": Array [
-          Object {
-            "name": "a",
-            "required": true,
-            "type": "string",
-          },
-          Object {
-            "name": "b",
-            "required": true,
-            "type": "number",
-          },
-        ],
-        "type": "object",
-      },
-      Object {
-        "name": "p",
-        "type": "Person",
-      },
-      Object {
-        "name": "c",
-        "type": "Consent",
-      },
-      Object {
-        "name": "n",
-        "type": "NumberEnum",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "extends": Array [
-      "BaseAddress",
-      "Person",
-    ],
-    "name": "SuperAddress",
-    "properties": Array [
-      Object {
-        "name": "address3",
-        "required": true,
-        "type": "string",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "Type2",
-    "properties": Array [
-      Object {
-        "name": "s",
-        "type": "string",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "TestType",
-    "properties": Array [
-      Object {
-        "name": "s",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "n",
-        "required": true,
-        "type": "null",
-      },
-      Object {
-        "name": "s2",
-        "required": true,
-        "type": Array [
-          "string",
-          "null",
-        ],
-      },
-      Object {
-        "arrayOfType": Array [
-          "Person",
-          "null",
-        ],
-        "name": "p",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Object {
-          "tupleTypes": Array [
-            "number",
-            "number",
-          ],
-          "type": "tuple",
-        },
-        "name": "lhdays",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "constValue": "some string",
-        "name": "lit",
-        "type": "string",
-      },
-      Object {
-        "constValue": 26,
-        "name": "nlit",
-        "type": "number",
-      },
-      Object {
-        "constValue": true,
-        "name": "litb",
-        "type": "boolean",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "AirtableId",
-    "type": "string",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "RED",
-        "v": 1,
-      },
-      Object {
-        "k": "YELLOW",
-        "v": 2,
-      },
-      Object {
-        "k": "GREEN",
-        "v": 3,
-      },
-    ],
-    "name": "UFColor",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "PREVENT",
-        "v": " 'PREVENT'",
-      },
-      Object {
-        "k": "PLAN",
-        "v": " 'PLAN'",
-      },
-      Object {
-        "k": "PREGNANT",
-        "v": " 'PREGNANT'",
-      },
-    ],
-    "name": "Goal",
-    "type": "enum",
-  },
-  Object {
-    "name": "BaseColorCode",
-    "properties": Array [
-      Object {
-        "name": "date",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "color",
-        "required": true,
-        "type": "UFColor",
-      },
-      Object {
-        "name": "redscale",
-        "type": "number",
-      },
-      Object {
-        "name": "code",
-        "required": true,
-        "type": "UFCode",
-      },
-      Object {
-        "name": "cd",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "nCycle",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "goal",
-        "required": true,
-        "type": "Goal",
-      },
-      Object {
-        "name": "lhStatus",
-        "type": "LHStatus",
-      },
-      Object {
-        "name": "ovulationStatus",
-        "type": "OvulationStatus",
-      },
-      Object {
-        "name": "pregnancyTestStatus",
-        "type": "PregnancyTestStatus",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "extends": Array [
-      "BaseColorCode",
-    ],
-    "name": "UFColorCode",
-    "properties": Array [
-      Object {
-        "name": "cycleStartDate",
-        "required": true,
-        "type": "string",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "extends": Array [
-      "BaseColorCode",
-    ],
-    "name": "UFPredictionColorCode",
-    "properties": Array [
-      Object {
-        "arrayOfType": "DataFlag",
-        "name": "dataFlags",
-        "type": "array",
-      },
-      Object {
-        "name": "mensQuantity",
-        "type": "DataQuantity",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "OVULATION",
-        "v": " 'OVULATION'",
-      },
-      Object {
-        "k": "WINDOW1",
-        "v": " 'WINDOW1'",
-      },
-      Object {
-        "k": "WINDOW2",
-        "v": " 'WINDOW2'",
-      },
-    ],
-    "name": "OvulationPrediction",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "LH_PREDICTION",
-        "v": 1,
-      },
-      Object {
-        "k": "LH_NEG_PRE_OVU_CONFIRMED",
-        "v": 2,
-      },
-      Object {
-        "k": "LH_POS_PRE_OVU_CONFIRMED",
-        "v": 3,
-      },
-      Object {
-        "k": "LH_NEG_OVU_DAY",
-        "v": 4,
-      },
-      Object {
-        "k": "LH_POS_OVU_CONFIRMED",
-        "v": 5,
-      },
-      Object {
-        "k": "LH_POS_OVU_NOT_CONFIRMED",
-        "v": 6,
-      },
-    ],
-    "name": "LHStatus",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "OVU_CONFIRMED",
-        "v": 1,
-      },
-      Object {
-        "k": "OVU_NOT_CONFIRMED",
-        "v": 2,
-      },
-      Object {
-        "k": "OVU_WAITING",
-        "v": 3,
-      },
-      Object {
-        "k": "OVU_PREDICTION",
-        "v": 4,
-      },
-      Object {
-        "k": "OVU_DAY",
-        "v": 5,
-      },
-      Object {
-        "k": "ANOVULATORY",
-        "v": 6,
-      },
-    ],
-    "name": "OvulationStatus",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "PREG_PREDICTION",
-        "v": 1,
-      },
-      Object {
-        "k": "PREG_NEGATIVE",
-        "v": 2,
-      },
-      Object {
-        "k": "PREG_POSITIVE",
-        "v": 3,
-      },
-    ],
-    "name": "PregnancyTestStatus",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "YES",
-        "v": 1,
-      },
-      Object {
-        "k": "NO",
-        "v": 2,
-      },
-    ],
-    "name": "TestResult",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "MENSTRUATION",
-        "v": 1,
-      },
-      Object {
-        "k": "SPOTTING",
-        "v": 2,
-      },
-    ],
-    "name": "Mens",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "YES",
-        "v": 1,
-      },
-      Object {
-        "k": "YES_PROTECTED",
-        "v": 2,
-      },
-      Object {
-        "k": "NO",
-        "v": 3,
-      },
-    ],
-    "name": "HadSex",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "NONE",
-        "v": 1,
-      },
-      Object {
-        "k": "LIGHT",
-        "v": 2,
-      },
-      Object {
-        "k": "MEDIUM",
-        "v": 3,
-      },
-      Object {
-        "k": "HEAVY",
-        "v": 4,
-      },
-    ],
-    "name": "DataQuantity",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "CONDOM",
-        "v": 1,
-      },
-      Object {
-        "k": "WITHDRAWAL",
-        "v": 2,
-      },
-      Object {
-        "k": "NO_WITHDRAWAL",
-        "v": 3,
-      },
-      Object {
-        "k": "OTHER",
-        "v": 4,
-      },
-    ],
-    "name": "SexType",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "STICKY",
-        "v": 1,
-      },
-      Object {
-        "k": "CREAMY",
-        "v": 2,
-      },
-      Object {
-        "k": "EGGWHITE",
-        "v": 3,
-      },
-      Object {
-        "k": "WATERY",
-        "v": 4,
-      },
-    ],
-    "name": "CervicalMucusConsistency",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "LOW",
-        "v": 1,
-      },
-      Object {
-        "k": "MEDIUM",
-        "v": 2,
-      },
-      Object {
-        "k": "HIGH",
-        "v": 3,
-      },
-    ],
-    "name": "Libido",
-    "type": "enum",
-  },
-  Object {
-    "enumItems": Array [
-      Object {
-        "k": "PERIOD",
-        "v": 1,
-      },
-      Object {
-        "k": "FOLLICULAR",
-        "v": 2,
-      },
-      Object {
-        "k": "OVULATION",
-        "v": 3,
-      },
-      Object {
-        "k": "OVULATION_WAITING",
-        "v": 4,
-      },
-      Object {
-        "k": "LUTEAL",
-        "v": 5,
-      },
-    ],
-    "name": "CurrentPhaseId",
-    "type": "enum",
-  },
-  Object {
-    "name": "CycleSummary",
-    "properties": Array [
-      Object {
-        "name": "startDate",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "endDate",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "nCycle",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "cycleLength",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "mensLength",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "ovulationCD",
-        "type": "number",
-      },
-      Object {
-        "name": "ovulationDate",
-        "type": "string",
-      },
-      Object {
-        "name": "spottingDays",
-        "type": "number",
-      },
-      Object {
-        "name": "lhTestPositive",
-        "type": "number",
-      },
-      Object {
-        "name": "lhTestNegative",
-        "type": "number",
-      },
-      Object {
-        "name": "unprotectedSex",
-        "type": "number",
-      },
-      Object {
-        "name": "pregnancyEndDate",
-        "type": "string",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "CurrentPhase",
-    "properties": Array [
-      Object {
-        "name": "id",
-        "required": true,
-        "type": "CurrentPhaseId",
-      },
-      Object {
-        "name": "trackersGeneric",
-        "type": "boolean",
-      },
-      Object {
-        "arrayOfType": "DataFlag",
-        "name": "dataFlags",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "name": "libido",
-        "type": "Libido",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "UserFertilityStats",
-    "properties": Array [
-      Object {
-        "name": "lowTempMean",
-        "type": "number",
-      },
-      Object {
-        "name": "lowTempRMS",
-        "type": "number",
-      },
-      Object {
-        "name": "highTempMean",
-        "type": "number",
-      },
-      Object {
-        "name": "highTempRMS",
-        "type": "number",
-      },
-      Object {
-        "name": "pregTempMean",
-        "type": "number",
-      },
-      Object {
-        "name": "pregTempRMS",
-        "type": "number",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "extends": Array [
-      "UserFertilityStats",
-    ],
-    "name": "UserFertility",
-    "properties": Array [
-      Object {
-        "name": "v",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "algoVersion",
-        "type": "string",
-      },
-      Object {
-        "descr": "Can be undefined in older versions of UserFertilityCache!",
-        "name": "fahrenheit",
-        "type": "boolean",
-      },
-      Object {
-        "name": "startDate",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "todayDate",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "lastDate",
-        "required": true,
-        "type": "string",
-      },
-      Object {
-        "name": "conceptionDate",
-        "type": "string",
-      },
-      Object {
-        "name": "dueDate",
-        "type": "string",
-      },
-      Object {
-        "name": "minPossiblePregnancyEndedDate",
-        "type": "string",
-      },
-      Object {
-        "name": "greenDays",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "redDays",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "yellowDays",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "dataActivity",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "arrayOfType": "boolean",
-        "name": "noOCycles",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "cycleLengths",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "ovulationDays",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "predOvulationDays",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "ovulationWindowMin",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "ovulationWindowMax",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "number",
-          "null",
-        ],
-        "name": "mensLengths",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "arrayOfType": Array [
-          "CycleSummary",
-          "null",
-        ],
-        "name": "cycleSummaries",
-        "type": "array",
-      },
-      Object {
-        "name": "currentPhase",
-        "type": "CurrentPhase",
-      },
-      Object {
-        "arrayOfType": Object {
-          "tupleTypes": Array [
-            "number",
-            "number",
-          ],
-          "type": "tuple",
-        },
-        "name": "lhdays",
-        "required": true,
-        "type": "array",
-      },
-      Object {
-        "name": "clave",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "claveRMS",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "greenbfO",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "lpave",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "lpaveRMS",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "mdays",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "mdaysRMS",
-        "type": "number",
-      },
-      Object {
-        "name": "ncycles",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "oave",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "oaveRMS",
-        "required": true,
-        "type": "number",
-      },
-      Object {
-        "name": "pregnantNow",
-        "required": true,
-        "type": "boolean",
-      },
-      Object {
-        "name": "entryMap",
-        "required": true,
-        "stringMapOfType": "DailyEntryBM",
-        "type": "StringMap",
-      },
-      Object {
-        "name": "colorMap",
-        "required": true,
-        "stringMapOfType": "UFColorCode",
-        "type": "StringMap",
-      },
-      Object {
-        "name": "predictionMap",
-        "required": true,
-        "stringMapOfType": "UFPredictionColorCode",
-        "type": "StringMap",
-      },
-    ],
-    "type": "object",
-  },
-  Object {
-    "name": "UFCode",
-    "properties": Array [
-      Object {
-        "name": "checkLh",
-        "type": "boolean",
-      },
-      Object {
-        "name": "checkPreg",
-        "type": "boolean",
-      },
-      Object {
-        "name": "defMisc",
-        "type": "boolean",
-      },
-      Object {
-        "name": "defPreg",
-        "type": "boolean",
-      },
-      Object {
-        "name": "mens",
-        "type": "boolean",
-      },
-      Object {
-        "descr": "Confirmed ovulation (if in the past).
-In the future - we don't use it:)",
-        "name": "ovulation",
-        "type": "boolean",
-      },
-      Object {
-        "descr": "Frontend-only field to display \\"OvulationWindow'.",
-        "name": "ovulationPrediction",
-        "type": "OvulationPrediction",
-      },
-      Object {
-        "name": "possMisc",
-        "type": "boolean",
-      },
-      Object {
-        "name": "possPreg",
-        "type": "boolean",
-      },
-    ],
-    "type": "object",
-  },
-]
-`;
-
-exports[`allTypes 2`] = `
-Array [
-  Object {
     "$id": "DailyEntryBM.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
@@ -1443,8 +149,8 @@ Array [
     "$id": "Consent.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "enum": Array [
-      " 'YES'",
-      " 'NO'",
+      "YES",
+      "NO",
     ],
   },
   Object {
@@ -1545,83 +251,26 @@ la la la",
   Object {
     "$id": "SuperAddress.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": true,
-    "description": "Person type comment",
-    "properties": Object {
-      "a1": Object {
-        "items": Object {
-          "type": "string",
-        },
-        "type": "array",
-      },
-      "a2": Object {
-        "items": Object {
-          "items": Object {
-            "type": "string",
-          },
-          "type": "array",
-        },
-        "type": "array",
-      },
-      "address1": Object {
-        "type": "string",
-      },
-      "address2": Object {
-        "type": "string",
-      },
-      "address3": Object {
-        "type": "string",
-      },
-      "age": Object {
-        "type": "number",
-      },
-      "c": Object {
-        "$ref": "Consent.schema.json",
-      },
-      "home": Object {
-        "type": "boolean",
-      },
-      "int": Object {
-        "type": "integer",
-      },
-      "n": Object {
-        "$ref": "NumberEnum.schema.json",
-      },
-      "name": Object {
-        "type": "string",
-      },
-      "o1": Object {
+    "allOf": Array [
+      Object {
         "additionalProperties": false,
         "properties": Object {
-          "a": Object {
+          "address3": Object {
             "type": "string",
-          },
-          "b": Object {
-            "type": "number",
           },
         },
         "required": Array [
-          "a",
-          "b",
+          "address3",
         ],
         "type": "object",
       },
-      "p": Object {
+      Object {
+        "$ref": "BaseAddress.schema.json",
+      },
+      Object {
         "$ref": "Person.schema.json",
       },
-      "ts": Object {
-        "description": "asdf
-
-la la la",
-        "type": "number",
-      },
-    },
-    "required": Array [
-      "address1",
-      "name",
-      "address3",
     ],
-    "type": "object",
   },
   Object {
     "$id": "Type2.schema.json",
@@ -1632,6 +281,7 @@ la la la",
         "type": "string",
       },
     },
+    "required": Array [],
     "type": "object",
   },
   Object {
@@ -1639,6 +289,25 @@ la la la",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "properties": Object {
+      "intersect": Object {
+        "allOf": Array [
+          Object {
+            "$ref": "Person.schema.json",
+          },
+          Object {
+            "additionalProperties": false,
+            "properties": Object {
+              "id": Object {
+                "type": "string",
+              },
+            },
+            "required": Array [
+              "id",
+            ],
+            "type": "object",
+          },
+        ],
+      },
       "lhdays": Object {
         "items": Object {
           "items": Array [
@@ -1684,9 +353,13 @@ la la la",
         "type": "string",
       },
       "s2": Object {
-        "type": Array [
-          "string",
-          "null",
+        "oneOf": Array [
+          Object {
+            "type": "string",
+          },
+          Object {
+            "type": "null",
+          },
         ],
       },
     },
@@ -1717,9 +390,9 @@ la la la",
     "$id": "Goal.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "enum": Array [
-      " 'PREVENT'",
-      " 'PLAN'",
-      " 'PREGNANT'",
+      "PREVENT",
+      "PLAN",
+      "PREGNANT",
     ],
   },
   Object {
@@ -1771,115 +444,56 @@ la la la",
   Object {
     "$id": "UFColorCode.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
-    "properties": Object {
-      "cd": Object {
-        "type": "number",
+    "allOf": Array [
+      Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "cycleStartDate": Object {
+            "type": "string",
+          },
+        },
+        "required": Array [
+          "cycleStartDate",
+        ],
+        "type": "object",
       },
-      "code": Object {
-        "$ref": "UFCode.schema.json",
+      Object {
+        "$ref": "BaseColorCode.schema.json",
       },
-      "color": Object {
-        "$ref": "UFColor.schema.json",
-      },
-      "cycleStartDate": Object {
-        "type": "string",
-      },
-      "date": Object {
-        "type": "string",
-      },
-      "goal": Object {
-        "$ref": "Goal.schema.json",
-      },
-      "lhStatus": Object {
-        "$ref": "LHStatus.schema.json",
-      },
-      "nCycle": Object {
-        "type": "number",
-      },
-      "ovulationStatus": Object {
-        "$ref": "OvulationStatus.schema.json",
-      },
-      "pregnancyTestStatus": Object {
-        "$ref": "PregnancyTestStatus.schema.json",
-      },
-      "redscale": Object {
-        "type": "number",
-      },
-    },
-    "required": Array [
-      "date",
-      "color",
-      "code",
-      "cd",
-      "nCycle",
-      "goal",
-      "cycleStartDate",
     ],
-    "type": "object",
   },
   Object {
     "$id": "UFPredictionColorCode.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
-    "properties": Object {
-      "cd": Object {
-        "type": "number",
-      },
-      "code": Object {
-        "$ref": "UFCode.schema.json",
-      },
-      "color": Object {
-        "$ref": "UFColor.schema.json",
-      },
-      "dataFlags": Object {
-        "items": Object {
-          "$ref": "DataFlag.schema.json",
+    "allOf": Array [
+      Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "dataFlags": Object {
+            "items": Object {
+              "$ref": "DataFlag.schema.json",
+            },
+            "type": "array",
+          },
+          "mensQuantity": Object {
+            "$ref": "DataQuantity.schema.json",
+          },
         },
-        "type": "array",
+        "required": Array [],
+        "type": "object",
       },
-      "date": Object {
-        "type": "string",
+      Object {
+        "$ref": "BaseColorCode.schema.json",
       },
-      "goal": Object {
-        "$ref": "Goal.schema.json",
-      },
-      "lhStatus": Object {
-        "$ref": "LHStatus.schema.json",
-      },
-      "mensQuantity": Object {
-        "$ref": "DataQuantity.schema.json",
-      },
-      "nCycle": Object {
-        "type": "number",
-      },
-      "ovulationStatus": Object {
-        "$ref": "OvulationStatus.schema.json",
-      },
-      "pregnancyTestStatus": Object {
-        "$ref": "PregnancyTestStatus.schema.json",
-      },
-      "redscale": Object {
-        "type": "number",
-      },
-    },
-    "required": Array [
-      "date",
-      "color",
-      "code",
-      "cd",
-      "nCycle",
-      "goal",
     ],
-    "type": "object",
   },
   Object {
     "$id": "OvulationPrediction.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "enum": Array [
-      " 'OVULATION'",
-      " 'WINDOW1'",
-      " 'WINDOW2'",
+      "OVULATION",
+      "WINDOW1",
+      "WINDOW2",
     ],
   },
   Object {
@@ -2092,277 +706,273 @@ la la la",
         "type": "number",
       },
     },
+    "required": Array [],
     "type": "object",
   },
   Object {
     "$id": "UserFertility.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
-    "properties": Object {
-      "algoVersion": Object {
-        "type": "string",
-      },
-      "clave": Object {
-        "type": "number",
-      },
-      "claveRMS": Object {
-        "type": "number",
-      },
-      "colorMap": Object {
-        "patternProperties": Object {
-          ".*": Object {
-            "$ref": "UFColorCode.schema.json",
+    "allOf": Array [
+      Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "algoVersion": Object {
+            "type": "string",
+          },
+          "clave": Object {
+            "type": "number",
+          },
+          "claveRMS": Object {
+            "type": "number",
+          },
+          "colorMap": Object {
+            "additionalProperties": false,
+            "patternProperties": Object {
+              ".*": Object {
+                "$ref": "UFColorCode.schema.json",
+              },
+            },
+            "required": Array [],
+            "type": "object",
+          },
+          "conceptionDate": Object {
+            "type": "string",
+          },
+          "currentPhase": Object {
+            "$ref": "CurrentPhase.schema.json",
+          },
+          "cycleLengths": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "cycleSummaries": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "$ref": "CycleSummary.schema.json",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "dataActivity": Object {
+            "type": "number",
+          },
+          "dueDate": Object {
+            "type": "string",
+          },
+          "entryMap": Object {
+            "additionalProperties": false,
+            "patternProperties": Object {
+              ".*": Object {
+                "$ref": "DailyEntryBM.schema.json",
+              },
+            },
+            "required": Array [],
+            "type": "object",
+          },
+          "fahrenheit": Object {
+            "description": "Can be undefined in older versions of UserFertilityCache!",
+            "type": "boolean",
+          },
+          "greenDays": Object {
+            "type": "number",
+          },
+          "greenbfO": Object {
+            "type": "number",
+          },
+          "lastDate": Object {
+            "type": "string",
+          },
+          "lhdays": Object {
+            "items": Object {
+              "items": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "number",
+                },
+              ],
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array",
+            },
+            "type": "array",
+          },
+          "lpave": Object {
+            "type": "number",
+          },
+          "lpaveRMS": Object {
+            "type": "number",
+          },
+          "mdays": Object {
+            "type": "number",
+          },
+          "mdaysRMS": Object {
+            "type": "number",
+          },
+          "mensLengths": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "minPossiblePregnancyEndedDate": Object {
+            "type": "string",
+          },
+          "ncycles": Object {
+            "type": "number",
+          },
+          "noOCycles": Object {
+            "items": Object {
+              "type": "boolean",
+            },
+            "type": "array",
+          },
+          "oave": Object {
+            "type": "number",
+          },
+          "oaveRMS": Object {
+            "type": "number",
+          },
+          "ovulationDays": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "ovulationWindowMax": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "ovulationWindowMin": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "predOvulationDays": Object {
+            "items": Object {
+              "oneOf": Array [
+                Object {
+                  "type": "number",
+                },
+                Object {
+                  "type": "null",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "predictionMap": Object {
+            "additionalProperties": false,
+            "patternProperties": Object {
+              ".*": Object {
+                "$ref": "UFPredictionColorCode.schema.json",
+              },
+            },
+            "required": Array [],
+            "type": "object",
+          },
+          "pregnantNow": Object {
+            "type": "boolean",
+          },
+          "redDays": Object {
+            "type": "number",
+          },
+          "startDate": Object {
+            "type": "string",
+          },
+          "todayDate": Object {
+            "type": "string",
+          },
+          "v": Object {
+            "type": "number",
+          },
+          "yellowDays": Object {
+            "type": "number",
           },
         },
+        "required": Array [
+          "v",
+          "startDate",
+          "todayDate",
+          "lastDate",
+          "greenDays",
+          "redDays",
+          "yellowDays",
+          "dataActivity",
+          "noOCycles",
+          "cycleLengths",
+          "ovulationDays",
+          "predOvulationDays",
+          "ovulationWindowMin",
+          "ovulationWindowMax",
+          "mensLengths",
+          "lhdays",
+          "clave",
+          "claveRMS",
+          "greenbfO",
+          "lpave",
+          "lpaveRMS",
+          "mdays",
+          "ncycles",
+          "oave",
+          "oaveRMS",
+          "pregnantNow",
+          "entryMap",
+          "colorMap",
+          "predictionMap",
+        ],
         "type": "object",
       },
-      "conceptionDate": Object {
-        "type": "string",
+      Object {
+        "$ref": "UserFertilityStats.schema.json",
       },
-      "currentPhase": Object {
-        "$ref": "CurrentPhase.schema.json",
-      },
-      "cycleLengths": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "cycleSummaries": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "$ref": "CycleSummary.schema.json",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "dataActivity": Object {
-        "type": "number",
-      },
-      "dueDate": Object {
-        "type": "string",
-      },
-      "entryMap": Object {
-        "patternProperties": Object {
-          ".*": Object {
-            "$ref": "DailyEntryBM.schema.json",
-          },
-        },
-        "type": "object",
-      },
-      "fahrenheit": Object {
-        "description": "Can be undefined in older versions of UserFertilityCache!",
-        "type": "boolean",
-      },
-      "greenDays": Object {
-        "type": "number",
-      },
-      "greenbfO": Object {
-        "type": "number",
-      },
-      "highTempMean": Object {
-        "type": "number",
-      },
-      "highTempRMS": Object {
-        "type": "number",
-      },
-      "lastDate": Object {
-        "type": "string",
-      },
-      "lhdays": Object {
-        "items": Object {
-          "items": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "number",
-            },
-          ],
-          "maxItems": 2,
-          "minItems": 2,
-          "type": "array",
-        },
-        "type": "array",
-      },
-      "lowTempMean": Object {
-        "type": "number",
-      },
-      "lowTempRMS": Object {
-        "type": "number",
-      },
-      "lpave": Object {
-        "type": "number",
-      },
-      "lpaveRMS": Object {
-        "type": "number",
-      },
-      "mdays": Object {
-        "type": "number",
-      },
-      "mdaysRMS": Object {
-        "type": "number",
-      },
-      "mensLengths": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "minPossiblePregnancyEndedDate": Object {
-        "type": "string",
-      },
-      "ncycles": Object {
-        "type": "number",
-      },
-      "noOCycles": Object {
-        "items": Object {
-          "type": "boolean",
-        },
-        "type": "array",
-      },
-      "oave": Object {
-        "type": "number",
-      },
-      "oaveRMS": Object {
-        "type": "number",
-      },
-      "ovulationDays": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "ovulationWindowMax": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "ovulationWindowMin": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "predOvulationDays": Object {
-        "items": Object {
-          "oneOf": Array [
-            Object {
-              "type": "number",
-            },
-            Object {
-              "type": "null",
-            },
-          ],
-        },
-        "type": "array",
-      },
-      "predictionMap": Object {
-        "patternProperties": Object {
-          ".*": Object {
-            "$ref": "UFPredictionColorCode.schema.json",
-          },
-        },
-        "type": "object",
-      },
-      "pregTempMean": Object {
-        "type": "number",
-      },
-      "pregTempRMS": Object {
-        "type": "number",
-      },
-      "pregnantNow": Object {
-        "type": "boolean",
-      },
-      "redDays": Object {
-        "type": "number",
-      },
-      "startDate": Object {
-        "type": "string",
-      },
-      "todayDate": Object {
-        "type": "string",
-      },
-      "v": Object {
-        "type": "number",
-      },
-      "yellowDays": Object {
-        "type": "number",
-      },
-    },
-    "required": Array [
-      "v",
-      "startDate",
-      "todayDate",
-      "lastDate",
-      "greenDays",
-      "redDays",
-      "yellowDays",
-      "dataActivity",
-      "noOCycles",
-      "cycleLengths",
-      "ovulationDays",
-      "predOvulationDays",
-      "ovulationWindowMin",
-      "ovulationWindowMax",
-      "mensLengths",
-      "lhdays",
-      "clave",
-      "claveRMS",
-      "greenbfO",
-      "lpave",
-      "lpaveRMS",
-      "mdays",
-      "ncycles",
-      "oave",
-      "oaveRMS",
-      "pregnantNow",
-      "entryMap",
-      "colorMap",
-      "predictionMap",
     ],
-    "type": "object",
   },
   Object {
     "$id": "UFCode.schema.json",
@@ -2391,6 +1001,7 @@ In the future - we don't use it:)",
       },
       "ovulationPrediction": Object {
         "$ref": "OvulationPrediction.schema.json",
+        "description": "Frontend-only field to display \\"OvulationWindow'.",
       },
       "possMisc": Object {
         "type": "boolean",
@@ -2399,6 +1010,7 @@ In the future - we don't use it:)",
         "type": "boolean",
       },
     },
+    "required": Array [],
     "type": "object",
   },
 ]

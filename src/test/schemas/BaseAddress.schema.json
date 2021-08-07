@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "BaseAddress.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "address1": {
       "type": "string"
@@ -37,7 +36,6 @@
     },
     "o1": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "a": {
           "type": "string"
@@ -49,7 +47,8 @@
       "required": [
         "a",
         "b"
-      ]
+      ],
+      "additionalProperties": false
     },
     "p": {
       "$ref": "Person.schema.json"
@@ -63,5 +62,6 @@
   },
   "required": [
     "address1"
-  ]
+  ],
+  "additionalProperties": false
 }

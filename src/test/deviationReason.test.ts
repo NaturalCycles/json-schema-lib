@@ -1,41 +1,10 @@
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
-import { createJsonSchemas } from '../jsonSchemaGenerator'
+import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
 import { testTypesDir } from '../paths'
-import { tsParseFile } from '../tsParser'
 import { DeviationReason } from './types/deviationReason'
 
 test('deviationReason', () => {
-  const types = tsParseFile(`${testTypesDir}/deviationReason.ts`)
-  expect(types[0]).toMatchInlineSnapshot(`
-Object {
-  "enumItems": Array [
-    Object {
-      "k": "OTHER",
-      "v": -1,
-    },
-    Object {
-      "k": "ALGO",
-      "v": 1,
-    },
-    Object {
-      "k": "SLEEP",
-      "v": 2,
-    },
-    Object {
-      "k": "ALCOHOL",
-      "v": 3,
-    },
-    Object {
-      "k": "SICK",
-      "v": 4,
-    },
-  ],
-  "name": "DeviationReason",
-  "type": "enum",
-}
-`)
-
-  const schemas = createJsonSchemas(types)
+  const schemas = generateSchemasFromFilePaths([`${testTypesDir}/deviationReason.ts`])
   expect(schemas[0]).toMatchInlineSnapshot(`
 Object {
   "$id": "DeviationReason.schema.json",

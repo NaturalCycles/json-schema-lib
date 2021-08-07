@@ -2,8 +2,8 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "OvulationPrediction.schema.json",
   "enum": [
-    " 'OVULATION'",
-    " 'WINDOW1'",
-    " 'WINDOW2'"
+    "OVULATION",
+    "WINDOW1",
+    "WINDOW2"
   ]
 }

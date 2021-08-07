@@ -1,15 +1,11 @@
 import Ajv from 'ajv'
 import * as globby from 'globby'
-import { createJsonSchemas } from '../jsonSchemaGenerator'
+import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
 import { testTypesDir } from '../paths'
-import { tsParseFiles } from '../tsParser'
 
 test('allTypes', () => {
   const files = globby.sync(testTypesDir)
-  const types = tsParseFiles(files).filter(t => !t.name!.includes('Excluded'))
-  expect(types).toMatchSnapshot()
-
-  const schemas = createJsonSchemas(types)
+  const schemas = generateSchemasFromFilePaths(files).filter(s => !s.$id!.includes('Excluded'))
   expect(schemas).toMatchSnapshot()
 
   // Ensure schemas don't throw ajv errors

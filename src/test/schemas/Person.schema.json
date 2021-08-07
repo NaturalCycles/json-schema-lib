@@ -2,8 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "Person.schema.json",
   "type": "object",
-  "description": "Person type comment",
-  "additionalProperties": true,
   "properties": {
     "name": {
       "type": "string"
@@ -14,5 +12,7 @@
   },
   "required": [
     "name"
-  ]
+  ],
+  "additionalProperties": true,
+  "description": "Person type comment"
 }

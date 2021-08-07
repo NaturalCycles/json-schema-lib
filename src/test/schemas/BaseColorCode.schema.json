@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "BaseColorCode.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "date": {
       "type": "string"
@@ -42,5 +41,6 @@
     "cd",
     "nCycle",
     "goal"
-  ]
+  ],
+  "additionalProperties": false
 }

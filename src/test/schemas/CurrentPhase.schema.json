@@ -2,7 +2,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "CurrentPhase.schema.json",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "id": {
       "$ref": "CurrentPhaseId.schema.json"
@@ -23,5 +22,6 @@
   "required": [
     "id",
     "dataFlags"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -15,17 +15,9 @@ export interface CommonTypeCfg {
    */
   outputDir: string
 
-  includeTypes?: string[]
+  includeSchemas?: string[]
 
-  excludeTypes?: string[]
-
-  /**
-   * Set to true to output `${name}.ast.json` files aka CommonType AST.
-   * Note! CommonType AST is unstable/experimental and subject to change!
-   *
-   * @default false
-   */
-  writeAST?: boolean
+  excludeSchemas?: string[]
 
   /**
    * Set to true to enable debug logging.
