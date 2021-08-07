@@ -115,6 +115,12 @@ export interface CommonObjectType {
    */
   enumItems?: EnumItem[]
 
+  /**
+   * For `string`, `number`, `boolean` literal types.
+   * Becomes `const` in JSON schema
+   */
+  constValue?: string | number | boolean
+
   //
   // Validation
   //

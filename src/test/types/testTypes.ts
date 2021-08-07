@@ -61,6 +61,9 @@ export interface TestType {
   s2: string | null
   p: (Person | null)[]
   lhdays: [number, number][]
+  lit?: 'some string'
+  nlit?: 26
+  litb?: true
 }
 
 // Should be excluded by test filters

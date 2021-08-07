@@ -10,6 +10,8 @@ interface JsonSchemaType {
   type?: string | string[]
   nullable?: boolean
 
+  const?: string | number | boolean // literal type
+
   // string
   pattern?: string
 
@@ -96,6 +98,12 @@ function commonTypeToJsonProperty(
     type: validationNameMap[s.validationType!] || s.type,
     // nullable: s.required ? undefined : true,
     description: s.descr,
+  }
+
+  if (s.constValue) {
+    delete p.type
+    p.const = s.constValue
+    return _filterNullishValues(p)
   }
 
   // Union type!

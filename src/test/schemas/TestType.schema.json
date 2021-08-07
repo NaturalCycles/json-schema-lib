@@ -44,6 +44,15 @@
         "minItems": 2,
         "maxItems": 2
       }
+    },
+    "lit": {
+      "const": "some string"
+    },
+    "nlit": {
+      "const": 26
+    },
+    "litb": {
+      "const": true
     }
   },
   "required": [

@@ -512,6 +512,21 @@ la la la",
         "required": true,
         "type": "array",
       },
+      Object {
+        "constValue": "some string",
+        "name": "lit",
+        "type": "string",
+      },
+      Object {
+        "constValue": 26,
+        "name": "nlit",
+        "type": "number",
+      },
+      Object {
+        "constValue": true,
+        "name": "litb",
+        "type": "boolean",
+      },
     ],
     "type": "object",
   },
@@ -1640,8 +1655,17 @@ la la la",
         },
         "type": "array",
       },
+      "lit": Object {
+        "const": "some string",
+      },
+      "litb": Object {
+        "const": true,
+      },
       "n": Object {
         "type": "null",
+      },
+      "nlit": Object {
+        "const": 26,
       },
       "p": Object {
         "items": Object {

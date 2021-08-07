@@ -40,6 +40,21 @@
       },
       "required": true,
       "name": "lhdays"
+    },
+    {
+      "type": "string",
+      "constValue": "some string",
+      "name": "lit"
+    },
+    {
+      "type": "number",
+      "constValue": 26,
+      "name": "nlit"
+    },
+    {
+      "type": "boolean",
+      "constValue": true,
+      "name": "litb"
     }
   ]
 }

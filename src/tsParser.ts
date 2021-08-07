@@ -20,7 +20,7 @@ export function tsParseSourceFile(file: ts.SourceFile): CommonObjectType[] {
     if (ts.isInterfaceDeclaration(n)) {
       const properties: CommonObjectType[] = n.members
         .map(n => {
-          return parseNodeAsCommonType(n) as CommonObjectType
+          return parseNodeAsCommonType(n, file) as CommonObjectType
         })
         .filter(Boolean)
 
@@ -39,7 +39,7 @@ export function tsParseSourceFile(file: ts.SourceFile): CommonObjectType[] {
 
       types.push(t)
     } else if (ts.isTypeAliasDeclaration(n)) {
-      const type = typeNodeToCommonType(n.type) as string | string[]
+      const type = typeNodeToCommonType(n.type, file) as string | string[]
 
       const t: CommonObjectType = {
         name: n.name.text,
@@ -77,31 +77,26 @@ export function tsParseSourceFile(file: ts.SourceFile): CommonObjectType[] {
   return types
 }
 
-function typeNodeToCommonType(type: ts.TypeNode): CommonType | CommonType[] {
+function typeNodeToCommonType(type: ts.TypeNode, file: ts.SourceFile): CommonType | CommonType[] {
   const t: CommonType | CommonType[] | undefined = typeMap[type.kind]
 
   if (t) return t
 
   // Union type
   if (ts.isUnionTypeNode(type)) {
-    return type.types.map(t => typeNodeToCommonType(t) as string)
+    return type.types.map(t => typeNodeToCommonType(t, file) as string)
   }
 
   // Parenthesized type
   if (ts.isParenthesizedTypeNode(type)) {
-    return typeNodeToCommonType(type.type)
-  }
-
-  // null type
-  if (ts.isLiteralTypeNode(type) && type.literal.kind === ts.SyntaxKind.NullKeyword) {
-    return 'null'
+    return typeNodeToCommonType(type.type, file)
   }
 
   // Array type
   if (ts.isArrayTypeNode(type)) {
     return {
       type: 'array',
-      arrayOfType: typeNodeToCommonType(type.elementType),
+      arrayOfType: typeNodeToCommonType(type.elementType, file),
     }
   }
 
@@ -111,7 +106,7 @@ function typeNodeToCommonType(type: ts.TypeNode): CommonType | CommonType[] {
       type: 'object',
       properties: type.members
         .map(n => {
-          return parseNodeAsCommonType(n) as CommonObjectType
+          return parseNodeAsCommonType(n, file) as CommonObjectType
         })
         .filter(Boolean),
     }
@@ -126,7 +121,7 @@ function typeNodeToCommonType(type: ts.TypeNode): CommonType | CommonType[] {
       return {
         type: 'StringMap',
         stringMapOfType: type.typeArguments?.length
-          ? typeNodeToCommonType(type.typeArguments[0]!)
+          ? typeNodeToCommonType(type.typeArguments[0]!, file)
           : 'string',
       }
     }
@@ -137,7 +132,36 @@ function typeNodeToCommonType(type: ts.TypeNode): CommonType | CommonType[] {
   if (ts.isTupleTypeNode(type)) {
     return {
       type: 'tuple',
-      tupleTypes: type.elements.map(n => typeNodeToCommonType(n) as CommonType),
+      tupleTypes: type.elements.map(n => typeNodeToCommonType(n, file) as CommonType),
+    }
+  }
+
+  // Literal type
+  if (ts.isLiteralTypeNode(type)) {
+    // e.g `someType: 'literal string'`
+    if (ts.isStringLiteral(type.literal)) {
+      return {
+        type: 'string',
+        constValue: type.literal.text,
+      }
+    } else if (ts.isNumericLiteral(type.literal)) {
+      return {
+        type: 'number',
+        constValue: Number(type.literal.text),
+      }
+    } else if (
+      type.literal.kind === ts.SyntaxKind.TrueKeyword ||
+      type.literal.kind === ts.SyntaxKind.FalseKeyword
+    ) {
+      return {
+        type: 'boolean',
+        constValue: Boolean(type.literal.getText(file)),
+      }
+    } else if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
+      return 'null'
+    } else {
+      console.log(`unknown literal type`, type.literal)
+      throw new Error(`unknown literal type (see above)`)
     }
   }
 
@@ -152,11 +176,14 @@ function isCommonObjectType(type: any): type is CommonObjectType {
 //   return Array.isArray(type)
 // }
 
-export function parseNodeAsCommonType(n: ts.Node): CommonObjectType | CommonTypeName | undefined {
+export function parseNodeAsCommonType(
+  n: ts.Node,
+  file: ts.SourceFile,
+): CommonObjectType | CommonTypeName | undefined {
   // Find PropertySignature (kind 163)
   if (!ts.isPropertySignature(n) || !n.type) return
 
-  const type = typeNodeToCommonType(n.type)
+  const type = typeNodeToCommonType(n.type, file)
 
   const field = isCommonObjectType(type)
     ? type
