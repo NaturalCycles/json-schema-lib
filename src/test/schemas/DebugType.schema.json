@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "DebugType.schema.json",
+  "type": "object",
+  "properties": {
+    "s": {
+      "$ref": "PersonPartial.schema.json"
+    }
+  },
+  "required": [
+    "s"
+  ],
+  "additionalProperties": false
+}

@@ -65,4 +65,22 @@ test('testType', () => {
       [1, 2],
     ],
   } as any)
+
+  schema.validate({
+    s: 's',
+    n: null,
+    s2: null,
+    p: [
+      null,
+      null,
+      {
+        name: 'n',
+      },
+    ],
+    lhdays: [
+      [1, 1],
+      [1, 2],
+    ],
+    part: {},
+  } as any)
 })

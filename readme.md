@@ -7,7 +7,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Allows to generate "Common Type" and [JSON Schema](https://json-schema.org/) from a set of
-Typescript files with exported Interfaces (and Enums).
+Typescript files with Interfaces (also Types and Enums).
 
 Status: experimental! Everything is subject to change!
 
@@ -45,10 +45,25 @@ Typescript AST debugging: https://ts-ast-viewer.com/
 - [x] tuple type
 - [x] StringMap support
 - [x] fix dataFlags bug
+- [x] includeTypes/excludeTypes in cfg
 
-- [ ] includeTypes/excludeTypes in cfg
+Non-structural validation:
+
 - [ ] unixTimestamp type
 - [ ] isoDate type
 - [ ] email type (regex)
 - [ ] id type
 - [ ] regex validation support
+
+## Currently NOT supported
+
+`Partial`, `Required`, `Omit`, `Pick`
+
+Generic interfaces e.g:
+
+```ts
+interface MyType<T> {
+  current: T
+  future: T
+}
+```

@@ -55,11 +55,13 @@ export interface Type2 {
   s?: string
 }
 
-export interface TestType {
+// `extends Array` should be ignored
+export interface TestType extends Array<any> {
   s: string
   n: null
   s2: string | null
   p: (Person | null)[]
+  // part?: Partial<Person>
   lhdays: [number, number][]
   lit?: 'some string'
   nlit?: 26
@@ -75,3 +77,13 @@ export interface ShouldBeExcluded {
 // Should support types too
 // eslint-disable-next-line unused-imports/no-unused-vars
 export type AirtableId<T = any> = string
+
+export class C {
+  s!: string
+
+  maybe?: string
+
+  get a(): string {
+    return this.s
+  }
+}

@@ -1,4 +1,4 @@
-import { StringMap, _assert, _omit } from '@naturalcycles/js-lib'
+import { StringMap, _assert, _omit, _substringBefore } from '@naturalcycles/js-lib'
 import * as ts from 'typescript'
 
 interface EnumItem<T extends string | number = string | number> {
@@ -105,22 +105,32 @@ export type JsonSchema =
   | ArrayJsonSchema
   | TupleJsonSchema
 
+const ignoreRefs = ['Array']
+
 const $schema = 'http://json-schema.org/draft-07/schema#'
 
 export function tsFileToJsonSchemas(
   fileString: string,
   fileName = 'anonymousFileName',
 ): JsonSchema[] {
+  const schemas = tsFileToJsonSchemasPass(fileString, fileName)
+
+  // todo: Find all Partial/Required schemas
+
+  return schemas
+}
+
+function tsFileToJsonSchemasPass(fileString: string, fileName = 'anonymousFileName'): JsonSchema[] {
   const file = ts.createSourceFile(fileName, fileString, ts.ScriptTarget.Latest)
 
   const schemas: JsonSchema[] = []
 
   file.forEachChild(n => {
-    if (ts.isInterfaceDeclaration(n)) {
+    if (ts.isInterfaceDeclaration(n) || ts.isClassDeclaration(n)) {
       const props: JsonSchema[] = n.members.map(n => nodeToJsonSchema(n, file)!).filter(Boolean)
 
       const s: ObjectJsonSchema = {
-        $id: $idToRef(n.name.text),
+        $id: $idToRef(n.name!.text),
         type: 'object',
         properties: Object.fromEntries(props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])])),
         required: props.filter(p => p.requiredField).map(p => p.$id!),
@@ -133,12 +143,17 @@ export function tsFileToJsonSchemas(
           tt => (tt.expression as any).text as string,
         )
           .filter(Boolean)
+          .filter(id => !ignoreRefs.includes(id))
           .map($id => ({ $ref: $idToRef($id) }))
 
-        schemas.push({
-          $id: s.$id,
-          allOf: [_omit(s, ['$id']), ...otherSchemas],
-        })
+        if (!otherSchemas.length) {
+          schemas.push(s)
+        } else {
+          schemas.push({
+            $id: s.$id,
+            allOf: [_omit(s, ['$id']), ...otherSchemas],
+          })
+        }
       } else {
         schemas.push(s)
       }
@@ -191,15 +206,21 @@ export function tsFileToJsonSchemas(
 // Here we should get: name of the property, required-ness
 export function nodeToJsonSchema(n: ts.Node, file: ts.SourceFile): JsonSchema | undefined {
   // Find PropertySignature (kind 163)
-  if (!ts.isPropertySignature(n) || !n.type) return
+  if (
+    (!ts.isPropertySignature(n) && !ts.isPropertyDeclaration(n) && !ts.isGetAccessor(n)) ||
+    !n.type
+  )
+    return
 
   const schema = typeNodeToJsonSchema(n.type, file)
 
   if (!n.questionToken) schema.requiredField = true
 
-  if (ts.isIdentifier(n.name)) {
-    schema.$id = n.name.text
+  if ((n.name as ts.Identifier).text !== undefined) {
+    schema.$id = (n.name as ts.Identifier).text
   }
+
+  // console.log(schema)
 
   Object.assign(schema, parseJsdoc(n))
 
@@ -268,6 +289,7 @@ function typeNodeToJsonSchema(type: ts.TypeNode, file: ts.SourceFile): JsonSchem
   }
 
   // Object type (reference)
+  // Can also be Partial<T>, Required<T>, etc
   if (ts.isTypeReferenceNode(type)) {
     // Can be StringMap
     const typeName = (type.typeName as ts.Identifier).text
@@ -285,6 +307,24 @@ function typeNodeToJsonSchema(type: ts.TypeNode, file: ts.SourceFile): JsonSchem
           '.*': valueType,
         },
       }
+    }
+
+    if (typeName === 'Partial') {
+      const valueType = type.typeArguments![0]!
+      const s = typeNodeToJsonSchema(valueType, file) as RefJsonSchema
+      _assert(s.$ref, 'We only support Partial for $ref schemas')
+      s.$ref = $idToRef($refToId(s.$ref) + 'Partial')
+      // todo: need to generate ${x}Partial schema in 2nd pass
+      return s
+    }
+
+    if (typeName === 'Required') {
+      const valueType = type.typeArguments![0]!
+      const s = typeNodeToJsonSchema(valueType, file) as RefJsonSchema
+      _assert(s.$ref, 'We only support Required for $ref schemas')
+      s.$ref = $idToRef($refToId(s.$ref) + 'Required')
+      // todo: need to generate ${x}Required schema in 2nd pass
+      return s
     }
 
     return {
@@ -320,6 +360,17 @@ function typeNodeToJsonSchema(type: ts.TypeNode, file: ts.SourceFile): JsonSchem
     }
   }
 
+  // any
+  if (type.kind === ts.SyntaxKind.AnyKeyword) {
+    return {
+      // description: 'any',
+    } // schema matching "anything"
+  }
+
+  console.log(type)
+  try {
+    console.log(type.getFullText(file))
+  } catch {}
   throw new Error(`unknown type kind: ${type.kind}`)
 }
 
@@ -356,6 +407,6 @@ function $idToRef($id: string): string {
   return `${$id}.schema.json`
 }
 
-// function $refToId($ref: string): string {
-//   return _substringBefore($ref, '.schema.json')
-// }
+function $refToId($ref: string): string {
+  return _substringBefore($ref, '.schema.json')
+}
