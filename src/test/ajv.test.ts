@@ -1,5 +1,4 @@
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
-import Ajv from 'ajv'
 import * as fs from 'fs-extra'
 import { testSchemasDir } from '../paths'
 import { BaseAddress, TestType, Type2 } from './types/testTypes'
@@ -12,9 +11,7 @@ const consentSchema = fs.readJsonSync(`${testSchemasDir}/Consent.schema.json`)
 const numberEnumSchema = fs.readJsonSync(`${testSchemasDir}/NumberEnum.schema.json`)
 
 test('type2 schema', () => {
-  const schema = new AjvSchema(type2Schema, {
-    objectName: 'Type2',
-  })
+  const schema = new AjvSchema(type2Schema)
 
   const v1: Type2 = {
     s: 'sdf',
@@ -31,12 +28,8 @@ test('type2 schema', () => {
 })
 
 test('baseAddress', () => {
-  const ajv = new Ajv({
-    schemas: [personSchema, consentSchema, numberEnumSchema],
-  })
   const schema = new AjvSchema<BaseAddress>(baseAddressSchema, {
-    ajv,
-    objectName: 'BaseAddress',
+    schemas: [personSchema, consentSchema, numberEnumSchema],
   })
 
   const a1 = {
@@ -52,12 +45,8 @@ test('baseAddress', () => {
 })
 
 test('testType', () => {
-  const ajv = new Ajv({
-    schemas: [personSchema],
-  })
-
   const schema = new AjvSchema<TestType>(testTypeSchema, {
-    ajv,
+    schemas: [personSchema],
   })
 
   schema.validate({

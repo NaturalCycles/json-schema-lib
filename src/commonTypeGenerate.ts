@@ -21,7 +21,7 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
   // Validate cfg (dog-fooding)
   commonTypeCfgSchema.validate(cfg)
 
-  const { paths, outputDir, writeAST } = cfg
+  const { paths, outputDir, writeAST, includeTypes, excludeTypes } = cfg
 
   fs.ensureDirSync(outputDir)
 
@@ -32,7 +32,8 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
     return console.log('nothing to do, exiting')
   }
 
-  const types: CommonObjectType[] = []
+  let types: CommonObjectType[] = []
+  let errors = 0
 
   files.forEach(filePath => {
     try {
@@ -46,14 +47,27 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
       console.log(`${filePath}: ${newTypes.length} type(s) parsed`)
       types.push(...newTypes)
     } catch (err) {
-      console.log(`${filePath} ts parse error:`)
-      throw err
+      errors++
+      console.log(`${filePath} ts parse error:`, err)
     }
   })
 
-  console.log(`${types.length} type(s) parsed`)
+  console.log(`${types.length} type(s) parsed, ${errors} errors`)
 
-  // todo: process include/exclude schemas
+  // todo: process include/exclude types
+  if (includeTypes?.length) {
+    const includeRegexes = includeTypes.map(s => new RegExp(s))
+    types = types.filter(t => includeRegexes.some(reg => reg.test(t.name!)))
+  }
+
+  if (excludeTypes?.length) {
+    const excludeRegexes = excludeTypes.map(s => new RegExp(s))
+    types = types.filter(t => !excludeRegexes.some(reg => reg.test(t.name!)))
+  }
+
+  if (includeTypes || excludeTypes) {
+    console.log(`${types.length} type(s) after inclusion/exclusion filters`)
+  }
 
   if (!types.length) {
     return console.log(`no schemas to write, exiting`)

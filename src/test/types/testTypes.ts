@@ -62,3 +62,8 @@ export interface TestType {
   p: (Person | null)[]
   lhdays: [number, number][]
 }
+
+// Should be excluded by test filters
+export interface ShouldBeExcluded {
+  e: string
+}

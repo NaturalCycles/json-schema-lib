@@ -762,9 +762,9 @@
     tslib "^2.0.0"
 
 "@naturalcycles/nodejs-lib@^12.0.0", "@naturalcycles/nodejs-lib@^12.14.0", "@naturalcycles/nodejs-lib@^12.8.0":
-  version "12.19.0"
-  resolved "https://registry.yarnpkg.com/@naturalcycles/nodejs-lib/-/nodejs-lib-12.19.0.tgz#b40276976e187a794f6ed8342a7158e7128676ae"
-  integrity sha512-NPxM2NvC44aZk1ZprSQiiQ1lrIRYYCqP7J/hKnV3X3noT3gLASzXu0fcWjilz7KuDp+Ei+uCmEMtFcYIJ9fryw==
+  version "12.20.0"
+  resolved "https://registry.yarnpkg.com/@naturalcycles/nodejs-lib/-/nodejs-lib-12.20.0.tgz#0cfeb97109b6e9c75f018873f853e0cc7a77e055"
+  integrity sha512-Oo/p7CE6hCHXM/dM6xoD25s+AVzEtxBq6UepujHR4cYjzu0RpmlKBnOCjTyeFjsOOCjNCDq0GXYGlybXO1CZUw==
   dependencies:
     "@naturalcycles/js-lib" "^14.0.0"
     "@naturalcycles/time-lib" "^3.0.1"

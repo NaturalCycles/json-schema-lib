@@ -6,7 +6,7 @@ import { tsParseFiles } from '../tsParser'
 
 test('allTypes', () => {
   const files = globby.sync(testTypesDir)
-  const types = tsParseFiles(files)
+  const types = tsParseFiles(files).filter(t => !t.name!.includes('Excluded'))
   expect(types).toMatchSnapshot()
 
   const schemas = createJsonSchemas(types)
