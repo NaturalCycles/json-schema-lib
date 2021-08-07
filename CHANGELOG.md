@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/NaturalCycles/common-type/compare/v1.2.0...v1.3.0) (2021-08-07)
+
+
+### Features
+
+* support schemas from Classes ([f571a65](https://github.com/NaturalCycles/common-type/commit/f571a658ccded151bd9382492730c9441c2ef065))
+
 # [1.2.0](https://github.com/NaturalCycles/common-type/compare/v1.1.0...v1.2.0) (2021-08-07)
 
 
