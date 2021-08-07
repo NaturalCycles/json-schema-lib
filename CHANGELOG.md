@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/NaturalCycles/common-type/compare/v1.1.0...v1.2.0) (2021-08-07)
+
+
+### Features
+
+* support `export type` ([cccb4e0](https://github.com/NaturalCycles/common-type/commit/cccb4e05192861634016a6a03fbdcd81b36ead3e))
+* support literal types (string, number and boolean) ([bb8ef6e](https://github.com/NaturalCycles/common-type/commit/bb8ef6e050e40058ab40744dca4987f9f2775c1d))
+
 # [1.1.0](https://github.com/NaturalCycles/common-type/compare/v1.0.0...v1.1.0) (2021-08-07)
 
 
