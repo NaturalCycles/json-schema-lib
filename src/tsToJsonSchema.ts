@@ -183,7 +183,6 @@ class TSToJSONSchemaGenerator {
   }
 
   private nodeToJsonSchema(n: ts.Node): JsonSchema | undefined {
-    // Find PropertySignature (kind 163)
     if (
       (!ts.isPropertySignature(n) && !ts.isPropertyDeclaration(n) && !ts.isGetAccessor(n)) ||
       !n.type
@@ -195,7 +194,7 @@ class TSToJSONSchemaGenerator {
 
     if (!n.questionToken) schema.requiredField = true
 
-    if ((n.name as ts.Identifier).text !== undefined) {
+    if ((n.name as ts.Identifier)?.text !== undefined) {
       schema.$id = (n.name as ts.Identifier).text
     }
 
@@ -259,19 +258,59 @@ class TSToJSONSchemaGenerator {
     if (ts.isTypeLiteralNode(type)) {
       const props = type.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
 
-      return {
+      const s: ObjectJsonSchema = {
         type: 'object',
-        properties: Object.fromEntries(props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])])),
-        required: props.filter(p => p.requiredField).map(p => p.$id!),
+        properties: Object.fromEntries(
+          props.filter(p => p.$id).map(p => [p.$id, _omit(p, ['$id', 'requiredField'])]),
+        ),
+        required: props.filter(p => p.requiredField && p.$id).map(p => p.$id!),
         additionalProperties: false,
       }
+
+      const indexSignature = type.members.find(n => ts.isIndexSignatureDeclaration(n)) as
+        | ts.IndexSignatureDeclaration
+        | undefined
+      if (indexSignature) {
+        // Currently keyType is not used, but `string` is assumed
+        const valueType = this.typeNodeToJsonSchema(indexSignature.type)
+
+        // Removing declared properties to fix ajv strict compilation error:
+        // property X matches pattern .* (use allowMatchingProperties)
+        s.properties = {}
+        s.patternProperties = {
+          '.*': valueType,
+        }
+      }
+
+      return s
     }
 
     // Object type (reference)
-    // Can also be Partial<T>, Required<T>, etc
+    // Can also be Partial<T>, Required<T>,
+    // Record<string, number>
     if (ts.isTypeReferenceNode(type)) {
       // Can be StringMap
       const typeName = (type.typeName as ts.Identifier).text
+
+      if (typeName === 'Record') {
+        // Currently keyType is not used, but `string` is assumed
+        // const keyType = this.typeNodeToJsonSchema(type.typeArguments![0]!)
+        const valueType = this.typeNodeToJsonSchema(type.typeArguments![1]!)
+
+        return {
+          type: 'object',
+          additionalProperties: false,
+          required: [],
+          patternProperties: {
+            '.*': valueType,
+          },
+          // Currently keyType is not used, but `string` is assumed
+          // propertyNames: {
+          //   type: 'string',
+          //   pattern: "^[A-Za-z_][A-Za-z0-9_]*$"
+          // }
+        }
+      }
 
       if (typeName === 'StringMap') {
         const valueType: JsonSchema = type.typeArguments?.length

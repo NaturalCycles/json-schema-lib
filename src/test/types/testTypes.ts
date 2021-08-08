@@ -74,6 +74,14 @@ export interface TestPartialType {
   req?: Required<Person>
 }
 
+export interface TestRecordType {
+  r?: Record<string, number>
+  strMap: {
+    req: number
+    [k: string]: number
+  }
+}
+
 // Should be excluded by test filters
 export interface ShouldBeExcluded {
   e: string

@@ -388,6 +388,40 @@ la la la",
     "type": "object",
   },
   Object {
+    "$id": "TestRecordType.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "properties": Object {
+      "r": Object {
+        "additionalProperties": false,
+        "patternProperties": Object {
+          ".*": Object {
+            "type": "number",
+          },
+        },
+        "required": Array [],
+        "type": "object",
+      },
+      "strMap": Object {
+        "additionalProperties": false,
+        "patternProperties": Object {
+          ".*": Object {
+            "type": "number",
+          },
+        },
+        "properties": Object {},
+        "required": Array [
+          "req",
+        ],
+        "type": "object",
+      },
+    },
+    "required": Array [
+      "strMap",
+    ],
+    "type": "object",
+  },
+  Object {
     "$id": "AirtableId.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "string",
