@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/NaturalCycles/common-type/compare/v1.4.0...v1.5.0) (2021-08-08)
+
+
+### Features
+
+* jsdoc validation tags ([ec7a2ed](https://github.com/NaturalCycles/common-type/commit/ec7a2edb6da86e3226d36d85adce422eb3666f52))
+* support Record<A, B> and indexed types! ([606943b](https://github.com/NaturalCycles/common-type/commit/606943ba3534a32c477312ba0afbab3653fdf73f))
+
 # [1.4.0](https://github.com/NaturalCycles/common-type/compare/v1.3.0...v1.4.0) (2021-08-08)
 
 
