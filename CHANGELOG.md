@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/NaturalCycles/common-type/compare/v1.5.0...v1.6.0) (2021-08-08)
+
+
+### Features
+
+* support `[@default](https://github.com/default)` keyword ([e0aa50c](https://github.com/NaturalCycles/common-type/commit/e0aa50c7fdd9b938d205fa4e5fc1d440b4b66111))
+
 # [1.5.0](https://github.com/NaturalCycles/common-type/compare/v1.4.0...v1.5.0) (2021-08-08)
 
 
