@@ -28,7 +28,8 @@
     },
     "debug": {
       "type": "boolean",
-      "description": "Set to true to enable debug logging."
+      "description": "Set to true to enable debug logging.",
+      "default": false
     }
   },
   "required": [

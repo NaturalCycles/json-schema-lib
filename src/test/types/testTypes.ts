@@ -28,8 +28,6 @@ export interface BaseAddress {
    *
    * la la la
    *
-   * @default asd
-   *
    * @validationType unixTimestamp
    */
   ts?: number
@@ -90,6 +88,7 @@ export interface TestKeywords {
    * @maxLength 5
    * @pattern A[a-z]{1,4}
    * @todoformat myFormat
+   * @default Abc
    */
   s?: string
 

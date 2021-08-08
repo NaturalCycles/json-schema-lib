@@ -112,8 +112,9 @@ class TSToJSONSchemaGenerator {
           ),
           required: props.filter(p => p.requiredField).map(p => p.$id!),
           additionalProperties: false,
-          ...(parseJsdoc(n) as any),
         }
+
+        processJsdoc(n, s)
 
         if (n.heritageClauses?.length) {
           const otherSchemas = n.heritageClauses[0]!.types.map(
@@ -138,8 +139,9 @@ class TSToJSONSchemaGenerator {
         const s: JsonSchema = {
           $id: $idToRef(n.name.text),
           ...this.typeNodeToJsonSchema(n.type),
-          ...parseJsdoc(n),
         }
+
+        processJsdoc(n, s)
 
         schemas.push(s)
       } else if (ts.isEnumDeclaration(n)) {
@@ -201,7 +203,7 @@ class TSToJSONSchemaGenerator {
 
     // console.log(schema)
 
-    Object.assign(schema, parseJsdoc(n))
+    processJsdoc(n, schema)
 
     return schema
   }
@@ -449,10 +451,11 @@ const jsonTags = [
   'else',
 ]
 
-function parseJsdoc(n: ts.Node): Partial<JsonSchema> {
-  if (!(n as any).jsDoc?.length) return {}
-
-  const s: Partial<JsonSchema> = {}
+/**
+ * Processes jsdoc tags, mutates the schema as needed.
+ */
+function processJsdoc(n: ts.Node, s: JsonSchema): void {
+  if (!(n as any).jsDoc?.length) return
 
   const jsdoc: ts.JSDoc = (n as any).jsDoc[0]
 
@@ -466,7 +469,7 @@ function parseJsdoc(n: ts.Node): Partial<JsonSchema> {
 
     if (tagNameText === 'validationType') {
       if (comment === 'integer') {
-        ;(s as any).type = comment
+        s.type = comment
       }
     } else if (booleanTags.includes(tagNameText)) {
       s[tagNameText] = comment !== 'false'
@@ -485,10 +488,22 @@ function parseJsdoc(n: ts.Node): Partial<JsonSchema> {
         type: 'string',
         pattern: comment,
       }
+    } else if (tagNameText === 'default') {
+      _assertIsString(comment)
+
+      if (s.type === 'number') {
+        s.default = Number(comment)
+      } else if (s.type === 'integer') {
+        s.default = parseInt(comment)
+      } else if (s.type === 'boolean') {
+        s.default = comment === 'true'
+      } else if (s.type === 'string') {
+        s.default = comment
+      } else {
+        s.default = JSON.parse(comment)
+      }
     }
   })
-
-  return s
 }
 
 function $idToRef($id: string): string {

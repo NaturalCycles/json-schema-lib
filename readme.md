@@ -60,8 +60,8 @@ Typescript AST debugging: https://ts-ast-viewer.com/
 - Indexed properties (`{ [name: string]: string }`)
 - `StringMap` (aka Dictionary)
 - jsdoc tags:
-  - `@validationType` to override `type`, e.g. `@validationType integer`
-  - General: `deprecated`, `readOnly`, `writeOnly`
+  - `validationType` to override `type`, e.g. `@validationType integer`
+  - General: `deprecated`, `readOnly`, `writeOnly`, `default`
   - String: `pattern`, `format`, `minLength`, `maxLength`
   - Number: `multipleOf`, `minimum`, `exclusiveMinimum`, `maximum`, `exclusiveMaximum`
   - Object: `additionalProperties`, `minProperties`, `maxProperties`

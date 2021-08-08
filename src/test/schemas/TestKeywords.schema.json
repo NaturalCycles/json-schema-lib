@@ -7,7 +7,8 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 5,
-      "pattern": "A[a-z]{1,4}"
+      "pattern": "A[a-z]{1,4}",
+      "default": "Abc"
     },
     "n": {
       "type": "integer",

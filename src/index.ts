@@ -1,6 +1,37 @@
 import { CommonTypeCfg } from './commonTypeCfg'
-import { commonTypeGenerate } from './commonTypeGenerate'
+import { commonTypeGenerate, generateSchemasFromFilePaths } from './commonTypeGenerate'
+import {
+  ArrayJsonSchema,
+  BaseJsonSchema,
+  BooleanJsonSchema,
+  ConstJsonSchema,
+  EnumItem,
+  EnumJsonSchema,
+  JsonSchema,
+  NullJsonSchema,
+  NumberJsonSchema,
+  ObjectJsonSchema,
+  RefJsonSchema,
+  StringJsonSchema,
+  TupleJsonSchema,
+} from './model'
+import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
-export type { CommonTypeCfg }
+export type {
+  CommonTypeCfg,
+  JsonSchema,
+  BaseJsonSchema,
+  RefJsonSchema,
+  ConstJsonSchema,
+  EnumJsonSchema,
+  StringJsonSchema,
+  NumberJsonSchema,
+  BooleanJsonSchema,
+  NullJsonSchema,
+  ObjectJsonSchema,
+  ArrayJsonSchema,
+  TupleJsonSchema,
+  EnumItem,
+}
 
-export { commonTypeGenerate }
+export { commonTypeGenerate, tsFilesToJsonSchemas, generateSchemasFromFilePaths }

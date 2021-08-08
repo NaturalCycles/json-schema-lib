@@ -458,6 +458,7 @@ la la la",
         "type": "integer",
       },
       "s": Object {
+        "default": "Abc",
         "maxLength": 5,
         "minLength": 1,
         "pattern": "A[a-z]{1,4}",

@@ -16,6 +16,10 @@ export interface BaseJsonSchema {
   readOnly?: boolean
   writeOnly?: boolean
 
+  type?: string
+
+  default?: any
+
   // union type
   oneOf?: JsonSchema[]
   // intersection type
