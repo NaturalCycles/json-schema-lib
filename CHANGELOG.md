@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/NaturalCycles/common-type/compare/v1.3.0...v1.4.0) (2021-08-08)
+
+
+### Features
+
+* support Partial and Required types ([54bd357](https://github.com/NaturalCycles/common-type/commit/54bd35737daac37037cff410f878940a5cc52e3a))
+
 # [1.3.0](https://github.com/NaturalCycles/common-type/compare/v1.2.0...v1.3.0) (2021-08-07)
 
 
