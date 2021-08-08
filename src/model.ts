@@ -12,6 +12,22 @@ export interface BaseJsonSchema {
   description?: string
   // $comment?: string
   // nullable?: boolean // not sure about that field
+  deprecated?: boolean
+  readOnly?: boolean
+  writeOnly?: boolean
+
+  // union type
+  oneOf?: JsonSchema[]
+  // intersection type
+  allOf?: JsonSchema[]
+  // other types
+  anyOf?: JsonSchema[]
+  not?: JsonSchema
+
+  // https://json-schema.org/understanding-json-schema/reference/conditionals.html#id6
+  if?: JsonSchema
+  then?: JsonSchema
+  else?: JsonSchema
 
   /**
    * This is a temporary "intermediate AST" field that is used inside the parser.
@@ -28,16 +44,6 @@ export interface RootJsonSchema {
   $id: string
 }
 
-export interface CombinationJsonSchema extends BaseJsonSchema {
-  // union type
-  oneOf?: JsonSchema[]
-  // intersection type
-  allOf?: JsonSchema[]
-  // other types
-  anyOf?: JsonSchema[]
-  not?: JsonSchema
-}
-
 export interface ConstJsonSchema extends BaseJsonSchema {
   const: string | number | boolean // literal type
 }
@@ -45,14 +51,21 @@ export interface ConstJsonSchema extends BaseJsonSchema {
 export interface StringJsonSchema extends BaseJsonSchema {
   type: 'string'
   pattern?: string
+  minLength?: number
+  maxLength?: number
+  format?: string
+
+  contentMediaType?: string
+  contentEncoding?: string // e.g 'base64'
 }
 
 export interface NumberJsonSchema extends BaseJsonSchema {
-  type: 'number'
-}
-
-export interface IntegerJsonSchema extends BaseJsonSchema {
-  type: 'integer'
+  type: 'number' | 'integer'
+  multipleOf?: number
+  minimum?: number
+  exclusiveMinimum?: number
+  maximum?: number
+  exclusiveMaximum?: number
 }
 
 export interface BooleanJsonSchema extends BaseJsonSchema {
@@ -77,10 +90,25 @@ export interface ObjectJsonSchema extends BaseJsonSchema {
   // let's be strict and require all these
   required: string[]
   additionalProperties: boolean
+  minProperties?: number
+  maxProperties?: number
 
   // StringMap
   patternProperties?: StringMap<JsonSchema>
   propertyNames?: JsonSchema
+
+  /**
+   * @example
+   *
+   * dependentRequired: {
+   *   credit_card: ['billing_address']
+   * }
+   */
+  dependentRequired?: StringMap<string[]>
+
+  dependentSchemas?: StringMap<JsonSchema>
+
+  dependencies?: StringMap<string[]>
 }
 
 export interface ArrayJsonSchema extends BaseJsonSchema {
@@ -88,6 +116,7 @@ export interface ArrayJsonSchema extends BaseJsonSchema {
   items: JsonSchema
   minItems?: number
   maxItems?: number
+  uniqueItems?: boolean
 }
 
 export interface TupleJsonSchema extends BaseJsonSchema {
@@ -99,13 +128,11 @@ export interface TupleJsonSchema extends BaseJsonSchema {
 
 export type JsonSchema =
   | BaseJsonSchema
-  | CombinationJsonSchema
   | RefJsonSchema
   | ConstJsonSchema
   | EnumJsonSchema
   | StringJsonSchema
   | NumberJsonSchema
-  | IntegerJsonSchema
   | BooleanJsonSchema
   | NullJsonSchema
   | ObjectJsonSchema

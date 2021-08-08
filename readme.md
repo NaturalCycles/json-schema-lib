@@ -59,6 +59,15 @@ Typescript AST debugging: https://ts-ast-viewer.com/
 - `Record<A, B>`
 - Indexed properties (`{ [name: string]: string }`)
 - `StringMap` (aka Dictionary)
+- jsdoc tags:
+  - `@validationType` to override `type`, e.g. `@validationType integer`
+  - General: `deprecated`, `readOnly`, `writeOnly`
+  - String: `pattern`, `format`, `minLength`, `maxLength`
+  - Number: `multipleOf`, `minimum`, `exclusiveMinimum`, `maximum`, `exclusiveMaximum`
+  - Object: `additionalProperties`, `minProperties`, `maxProperties`
+  - Array: `minItems`, `maxItems`, `uniqueItems`
+  - Schema composition: `if`, `then`, `else`, `dependencies`, `dependentRequired`,
+    `dependentSchemas`
 
 ## todo
 
@@ -68,7 +77,6 @@ Non-structural validation:
 - [ ] isoDate type
 - [ ] email type (regex)
 - [ ] id type
-- [ ] regex validation support
 
 ## Currently NOT supported
 

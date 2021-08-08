@@ -1,3 +1,5 @@
+import { StringMap } from '@naturalcycles/js-lib'
+
 export enum Consent {
   YES = 'YES',
   NO = 'NO',
@@ -80,6 +82,38 @@ export interface TestRecordType {
     req: number
     [k: string]: number
   }
+}
+
+export interface TestKeywords {
+  /**
+   * @minLength 1
+   * @maxLength 5
+   * @pattern A[a-z]{1,4}
+   * @todoformat myFormat
+   */
+  s?: string
+
+  /**
+   * @validationType integer
+   * @multipleOf 2
+   * @minimum 6
+   * @maximum 8
+   */
+  n?: number
+
+  /**
+   * @propertyNames ^\d{4}-\d{2}-\d{2}$
+   * @minProperties 1
+   * @maxProperties 3
+   */
+  dateMap?: StringMap
+
+  /**
+   * @minItems 1
+   * @maxItems 3
+   * @uniqueItems
+   */
+  a?: number[]
 }
 
 // Should be excluded by test filters

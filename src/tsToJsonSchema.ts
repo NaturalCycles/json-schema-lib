@@ -101,6 +101,7 @@ class TSToJSONSchemaGenerator {
 
     this.file.forEachChild(n => {
       if (ts.isInterfaceDeclaration(n) || ts.isClassDeclaration(n)) {
+        // todo: DRY it (currently index properties are broken here)
         const props: JsonSchema[] = n.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
 
         const s: ObjectJsonSchema = {
@@ -111,7 +112,7 @@ class TSToJSONSchemaGenerator {
           ),
           required: props.filter(p => p.requiredField).map(p => p.$id!),
           additionalProperties: false,
-          ...parseJsdoc(n),
+          ...(parseJsdoc(n) as any),
         }
 
         if (n.heritageClauses?.length) {
@@ -399,10 +400,59 @@ class TSToJSONSchemaGenerator {
   }
 }
 
-function parseJsdoc<T extends JsonSchema>(n: ts.Node): Partial<T> {
+function _assertIsString(s: any, name = 'value'): asserts s is string {
+  _assert(typeof s === 'string' && s, `${name} must be non-empty string`)
+}
+
+const stringTags = [
+  // string
+  'pattern',
+  'format',
+]
+
+const numberTags = [
+  // string
+  'minLength',
+  'maxLength',
+  // number, integer
+  'multipleOf',
+  'minimum',
+  'exclusiveMinimum',
+  'maximum',
+  'exclusiveMaximum',
+  // object
+  'minProperties',
+  'maxProperties',
+  // array
+  'minItems',
+  'maxItems',
+]
+
+const booleanTags = [
+  // general
+  'deprecated',
+  'readOnly',
+  'writeOnly',
+  // object
+  'additionalProperties',
+  // array
+  'uniqueItems',
+]
+
+const jsonTags = [
+  // object
+  'dependencies',
+  'dependentRequired',
+  'dependentSchemas',
+  'if',
+  'then',
+  'else',
+]
+
+function parseJsdoc(n: ts.Node): Partial<JsonSchema> {
   if (!(n as any).jsDoc?.length) return {}
 
-  const s: Partial<T> = {}
+  const s: Partial<JsonSchema> = {}
 
   const jsdoc: ts.JSDoc = (n as any).jsDoc[0]
 
@@ -410,20 +460,33 @@ function parseJsdoc<T extends JsonSchema>(n: ts.Node): Partial<T> {
     s.description = jsdoc.comment as string
   }
 
-  if (jsdoc.tags) {
-    const typeTag = jsdoc.tags.find(t => t.tagName.text === 'validationType')
-    if (typeTag) {
-      // todo: add validationType features here
-      const validationType = typeTag.comment as string
-      if (validationType === 'integer') {
-        ;(s as any).type = validationType
+  jsdoc.tags?.forEach(tag => {
+    const { comment } = tag
+    const tagNameText = tag.tagName.text
+
+    if (tagNameText === 'validationType') {
+      if (comment === 'integer') {
+        ;(s as any).type = comment
+      }
+    } else if (booleanTags.includes(tagNameText)) {
+      s[tagNameText] = comment !== 'false'
+    } else if (stringTags.includes(tagNameText)) {
+      _assertIsString(comment)
+      s[tagNameText] = comment
+    } else if (numberTags.includes(tagNameText)) {
+      _assertIsString(comment)
+      s[tagNameText] = Number(comment)
+    } else if (jsonTags.includes(tagNameText)) {
+      _assertIsString(comment)
+      s[tagNameText] = JSON.parse(comment)
+    } else if (tagNameText === 'propertyNames') {
+      _assertIsString(comment)
+      ;(s as ObjectJsonSchema).propertyNames = {
+        type: 'string',
+        pattern: comment,
       }
     }
-
-    if (jsdoc.tags.some(t => t.tagName.text === 'additionalProperties')) {
-      ;(s as any).additionalProperties = true
-    }
-  }
+  })
 
   return s
 }
