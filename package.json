@@ -2,7 +2,7 @@
   "name": "@naturalcycles/common-type",
   "scripts": {
     "prepare": "husky install",
-    "commonType-debug": "tsn src/bin/common-type"
+    "debug": "tsn src/bin/common-type"
   },
   "dependencies": {
     "@naturalcycles/js-lib": "^14.20.0",

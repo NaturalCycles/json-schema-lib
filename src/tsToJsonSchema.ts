@@ -1,377 +1,322 @@
-import { StringMap, _assert, _omit, _substringBefore } from '@naturalcycles/js-lib'
+import {
+  StringMap,
+  _assert,
+  _omit,
+  _stringMapValues,
+  _substringBefore,
+} from '@naturalcycles/js-lib'
 import * as ts from 'typescript'
-
-interface EnumItem<T extends string | number = string | number> {
-  k: string
-  v: T
-}
-
-export interface BaseJsonSchema {
-  $schema?: string
-  $id?: string
-  title?: string
-  description?: string
-  // $comment?: string
-  // nullable?: boolean // not sure about that field
-
-  /**
-   * This is a temporary "intermediate AST" field that is used inside the parser.
-   * In the final schema this field will NOT be present.
-   */
-  requiredField?: boolean
-}
-
-export interface CombinationJsonSchema extends BaseJsonSchema {
-  // union type
-  oneOf?: JsonSchema[]
-  // intersection type
-  allOf?: JsonSchema[]
-  // other types
-  anyOf?: JsonSchema[]
-  not?: JsonSchema
-}
-
-export interface ConstJsonSchema extends BaseJsonSchema {
-  const: string | number | boolean // literal type
-}
-
-export interface StringJsonSchema extends BaseJsonSchema {
-  type: 'string'
-  pattern?: string
-}
-
-export interface NumberJsonSchema extends BaseJsonSchema {
-  type: 'number'
-}
-
-export interface IntegerJsonSchema extends BaseJsonSchema {
-  type: 'integer'
-}
-
-export interface BooleanJsonSchema extends BaseJsonSchema {
-  type: 'boolean'
-}
-
-export interface NullJsonSchema extends BaseJsonSchema {
-  type: 'null'
-}
-
-export interface EnumJsonSchema extends BaseJsonSchema {
-  enum: (string | number)[]
-}
-
-export interface RefJsonSchema extends BaseJsonSchema {
-  $ref: string
-}
-
-export interface ObjectJsonSchema extends BaseJsonSchema {
-  type: 'object'
-  properties?: StringMap<JsonSchema>
-  // let's be strict and require all these
-  required: string[]
-  additionalProperties: boolean
-
-  // StringMap
-  patternProperties?: StringMap<JsonSchema>
-  propertyNames?: JsonSchema
-}
-
-export interface ArrayJsonSchema extends BaseJsonSchema {
-  type: 'array'
-  items: JsonSchema
-  minItems?: number
-  maxItems?: number
-}
-
-export interface TupleJsonSchema extends BaseJsonSchema {
-  type: 'array'
-  items: JsonSchema[]
-  minItems: number
-  maxItems: number
-}
-
-export type JsonSchema =
-  | BaseJsonSchema
-  | CombinationJsonSchema
-  | RefJsonSchema
-  | ConstJsonSchema
-  | EnumJsonSchema
-  | StringJsonSchema
-  | NumberJsonSchema
-  | IntegerJsonSchema
-  | BooleanJsonSchema
-  | NullJsonSchema
-  | ObjectJsonSchema
-  | ArrayJsonSchema
-  | TupleJsonSchema
+import { EnumItem, JsonSchema, ObjectJsonSchema, RefJsonSchema } from './model'
 
 const ignoreRefs = ['Array']
 
 const $schema = 'http://json-schema.org/draft-07/schema#'
 
-export function tsFileToJsonSchemas(
-  fileString: string,
-  fileName = 'anonymousFileName',
+/**
+ * It accepts multiple files to be able to do multiple passes
+ * to be able to generate "by-product schemas" such as *Partial, *Required.
+ */
+export function tsFilesToJsonSchemas(
+  files: { fileString: string; fileName: string }[],
 ): JsonSchema[] {
-  const schemas = tsFileToJsonSchemasPass(fileString, fileName)
+  const schemaMap: StringMap<JsonSchema> = {}
+  const secondPassSchemas: string[] = []
 
-  // todo: Find all Partial/Required schemas
+  files.forEach(f => {
+    try {
+      const g = new TSToJSONSchemaGenerator()
+      const { schemas, secondPassSchemas: newSecondPassSchemas } = g.run(f.fileString, f.fileName)
 
-  return schemas
+      secondPassSchemas.push(...newSecondPassSchemas)
+
+      schemas.forEach(s => {
+        if (schemaMap[s.$id!]) {
+          console.warn(
+            `!!! ${s.$id} duplicated in ${f.fileName}, it will override previous schema with same $id`,
+          )
+        }
+        schemaMap[s.$id!] = s
+      })
+    } catch (err) {
+      console.log(`${f.fileName} ts parse error:`, err)
+    }
+  })
+
+  // todo: let's process secondPassSchemas!
+
+  return _stringMapValues(schemaMap)
 }
 
-function tsFileToJsonSchemasPass(fileString: string, fileName = 'anonymousFileName'): JsonSchema[] {
-  const file = ts.createSourceFile(fileName, fileString, ts.ScriptTarget.Latest)
+/**
+ * It is implemented as Class with internal state,
+ * because "internal state" is needed, e.g to produce
+ * "by-product schemas" such as *Partial, *Required.
+ */
+class TSToJSONSchemaGenerator {
+  private secondPassSchemas: string[] = []
+  private file!: ts.SourceFile
 
-  const schemas: JsonSchema[] = []
+  run(
+    fileString: string,
+    fileName: string,
+  ): { schemas: JsonSchema[]; secondPassSchemas: string[] } {
+    this.file = ts.createSourceFile(fileName, fileString, ts.ScriptTarget.Latest)
 
-  file.forEachChild(n => {
-    if (ts.isInterfaceDeclaration(n) || ts.isClassDeclaration(n)) {
-      const props: JsonSchema[] = n.members.map(n => nodeToJsonSchema(n, file)!).filter(Boolean)
+    const schemas: JsonSchema[] = []
 
-      const s: ObjectJsonSchema = {
-        $id: $idToRef(n.name!.text),
+    this.file.forEachChild(n => {
+      if (ts.isInterfaceDeclaration(n) || ts.isClassDeclaration(n)) {
+        const props: JsonSchema[] = n.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
+
+        const s: ObjectJsonSchema = {
+          $id: $idToRef(n.name!.text),
+          type: 'object',
+          properties: Object.fromEntries(
+            props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])]),
+          ),
+          required: props.filter(p => p.requiredField).map(p => p.$id!),
+          additionalProperties: false,
+          ...parseJsdoc(n),
+        }
+
+        if (n.heritageClauses?.length) {
+          const otherSchemas = n.heritageClauses[0]!.types.map(
+            tt => (tt.expression as any).text as string,
+          )
+            .filter(Boolean)
+            .filter(id => !ignoreRefs.includes(id))
+            .map($id => ({ $ref: $idToRef($id) }))
+
+          if (!otherSchemas.length) {
+            schemas.push(s)
+          } else {
+            schemas.push({
+              $id: s.$id,
+              allOf: [_omit(s, ['$id']), ...otherSchemas],
+            })
+          }
+        } else {
+          schemas.push(s)
+        }
+      } else if (ts.isTypeAliasDeclaration(n)) {
+        const s: JsonSchema = {
+          $id: $idToRef(n.name.text),
+          ...this.typeNodeToJsonSchema(n.type),
+          ...parseJsdoc(n),
+        }
+
+        schemas.push(s)
+      } else if (ts.isEnumDeclaration(n)) {
+        const enumItems: EnumItem[] = n.members.map(m => {
+          _assert(ts.isIdentifier(m.name), `enum name !isIdentifier`)
+          const k = m.name.text
+
+          _assert(m.initializer, `no enum initializer! ${k}`)
+
+          let v
+
+          if (ts.isNumericLiteral(m.initializer) || ts.isPrefixUnaryExpression(m.initializer)) {
+            v = Number(m.initializer.getFullText(this.file))
+          } else if (ts.isStringLiteral(m.initializer)) {
+            v = m.initializer.text
+          } else {
+            console.log(m.initializer)
+            throw new Error(`unknown enum initializer type`)
+          }
+
+          return {
+            k,
+            v,
+          }
+        })
+
+        schemas.push({
+          $id: $idToRef(n.name.text),
+          // We currently only include values
+          enum: enumItems.map(e => e.v),
+        })
+      }
+    })
+
+    return {
+      schemas: schemas.map(s => ({
+        $schema,
+        ...s,
+      })),
+      secondPassSchemas: this.secondPassSchemas,
+    }
+  }
+
+  private nodeToJsonSchema(n: ts.Node): JsonSchema | undefined {
+    // Find PropertySignature (kind 163)
+    if (
+      (!ts.isPropertySignature(n) && !ts.isPropertyDeclaration(n) && !ts.isGetAccessor(n)) ||
+      !n.type
+    ) {
+      return
+    }
+
+    const schema = this.typeNodeToJsonSchema(n.type)
+
+    if (!n.questionToken) schema.requiredField = true
+
+    if ((n.name as ts.Identifier).text !== undefined) {
+      schema.$id = (n.name as ts.Identifier).text
+    }
+
+    // console.log(schema)
+
+    Object.assign(schema, parseJsdoc(n))
+
+    return schema
+  }
+
+  // Here we should get "type" of jsonSchema
+  private typeNodeToJsonSchema(type: ts.TypeNode): JsonSchema {
+    if (type.kind === ts.SyntaxKind.StringKeyword) {
+      // todo: extra properties?
+      return { type: 'string' }
+    } else if (type.kind === ts.SyntaxKind.NumberKeyword) {
+      return { type: 'number' }
+    } else if (type.kind === ts.SyntaxKind.BooleanKeyword) {
+      return { type: 'boolean' }
+    }
+
+    // Union type (A || B)
+    if (ts.isUnionTypeNode(type)) {
+      return {
+        oneOf: type.types.map(t => this.typeNodeToJsonSchema(t)),
+      }
+    }
+
+    // Intersection type (A & B)
+    if (ts.isIntersectionTypeNode(type)) {
+      return {
+        allOf: type.types.map(t => this.typeNodeToJsonSchema(t)),
+      }
+    }
+
+    // Parenthesized type
+    if (ts.isParenthesizedTypeNode(type)) {
+      return this.typeNodeToJsonSchema(type.type)
+    }
+
+    // Array type
+    if (ts.isArrayTypeNode(type)) {
+      return {
+        type: 'array',
+        items: this.typeNodeToJsonSchema(type.elementType),
+      }
+    }
+
+    // Tuple type
+    if (ts.isTupleTypeNode(type)) {
+      const items = type.elements.map(n => this.typeNodeToJsonSchema(n))
+      return {
+        type: 'array',
+        items,
+        minItems: items.length,
+        maxItems: items.length,
+      }
+    }
+
+    // Object type (literal)
+    if (ts.isTypeLiteralNode(type)) {
+      const props = type.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
+
+      return {
         type: 'object',
         properties: Object.fromEntries(props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])])),
         required: props.filter(p => p.requiredField).map(p => p.$id!),
         additionalProperties: false,
-        ...parseJsdoc(n),
       }
+    }
 
-      if (n.heritageClauses?.length) {
-        const otherSchemas = n.heritageClauses[0]!.types.map(
-          tt => (tt.expression as any).text as string,
-        )
-          .filter(Boolean)
-          .filter(id => !ignoreRefs.includes(id))
-          .map($id => ({ $ref: $idToRef($id) }))
+    // Object type (reference)
+    // Can also be Partial<T>, Required<T>, etc
+    if (ts.isTypeReferenceNode(type)) {
+      // Can be StringMap
+      const typeName = (type.typeName as ts.Identifier).text
 
-        if (!otherSchemas.length) {
-          schemas.push(s)
-        } else {
-          schemas.push({
-            $id: s.$id,
-            allOf: [_omit(s, ['$id']), ...otherSchemas],
-          })
-        }
-      } else {
-        schemas.push(s)
-      }
-    } else if (ts.isTypeAliasDeclaration(n)) {
-      const s: JsonSchema = {
-        $id: $idToRef(n.name.text),
-        ...typeNodeToJsonSchema(n.type, file),
-        ...parseJsdoc(n),
-      }
-
-      schemas.push(s)
-    } else if (ts.isEnumDeclaration(n)) {
-      const enumItems: EnumItem[] = n.members.map(m => {
-        _assert(ts.isIdentifier(m.name), `enum name !isIdentifier`)
-        const k = m.name.text
-
-        _assert(m.initializer, `no enum initializer! ${k}`)
-
-        let v
-
-        if (ts.isNumericLiteral(m.initializer) || ts.isPrefixUnaryExpression(m.initializer)) {
-          v = Number(m.initializer.getFullText(file))
-        } else if (ts.isStringLiteral(m.initializer)) {
-          v = m.initializer.text
-        } else {
-          console.log(m.initializer)
-          throw new Error(`unknown enum initializer type`)
-        }
+      if (typeName === 'StringMap') {
+        const valueType: JsonSchema = type.typeArguments?.length
+          ? this.typeNodeToJsonSchema(type.typeArguments[0]!)
+          : { type: 'string' }
 
         return {
-          k,
-          v,
+          type: 'object',
+          additionalProperties: false,
+          required: [],
+          patternProperties: {
+            '.*': valueType,
+          },
         }
-      })
+      }
 
-      schemas.push({
-        $id: $idToRef(n.name.text),
-        // We currently only include values
-        enum: enumItems.map(e => e.v),
-      })
-    }
-  })
+      if (typeName === 'Partial') {
+        const valueType = type.typeArguments![0]!
+        const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
+        _assert(s.$ref, 'We only support Partial for $ref schemas')
+        s.$ref = $idToRef($refToId(s.$ref) + 'Partial')
+        // todo: need to generate ${x}Partial schema in 2nd pass
+        return s
+      }
 
-  return schemas.map(s => ({
-    $schema,
-    ...s,
-  }))
-}
-
-// Here we should get: name of the property, required-ness
-export function nodeToJsonSchema(n: ts.Node, file: ts.SourceFile): JsonSchema | undefined {
-  // Find PropertySignature (kind 163)
-  if (
-    (!ts.isPropertySignature(n) && !ts.isPropertyDeclaration(n) && !ts.isGetAccessor(n)) ||
-    !n.type
-  )
-    return
-
-  const schema = typeNodeToJsonSchema(n.type, file)
-
-  if (!n.questionToken) schema.requiredField = true
-
-  if ((n.name as ts.Identifier).text !== undefined) {
-    schema.$id = (n.name as ts.Identifier).text
-  }
-
-  // console.log(schema)
-
-  Object.assign(schema, parseJsdoc(n))
-
-  return schema
-}
-
-// Here we should get "type" of jsonSchema
-function typeNodeToJsonSchema(type: ts.TypeNode, file: ts.SourceFile): JsonSchema {
-  if (type.kind === ts.SyntaxKind.StringKeyword) {
-    // todo: extra properties?
-    return { type: 'string' }
-  } else if (type.kind === ts.SyntaxKind.NumberKeyword) {
-    return { type: 'number' }
-  } else if (type.kind === ts.SyntaxKind.BooleanKeyword) {
-    return { type: 'boolean' }
-  }
-
-  // Union type (A || B)
-  if (ts.isUnionTypeNode(type)) {
-    return {
-      oneOf: type.types.map(t => typeNodeToJsonSchema(t, file)),
-    }
-  }
-
-  // Intersection type (A & B)
-  if (ts.isIntersectionTypeNode(type)) {
-    return {
-      allOf: type.types.map(t => typeNodeToJsonSchema(t, file)),
-    }
-  }
-
-  // Parenthesized type
-  if (ts.isParenthesizedTypeNode(type)) {
-    return typeNodeToJsonSchema(type.type, file)
-  }
-
-  // Array type
-  if (ts.isArrayTypeNode(type)) {
-    return {
-      type: 'array',
-      items: typeNodeToJsonSchema(type.elementType, file),
-    }
-  }
-
-  // Tuple type
-  if (ts.isTupleTypeNode(type)) {
-    const items = type.elements.map(n => typeNodeToJsonSchema(n, file))
-    return {
-      type: 'array',
-      items,
-      minItems: items.length,
-      maxItems: items.length,
-    }
-  }
-
-  // Object type (literal)
-  if (ts.isTypeLiteralNode(type)) {
-    const props = type.members.map(n => nodeToJsonSchema(n, file)!).filter(Boolean)
-
-    return {
-      type: 'object',
-      properties: Object.fromEntries(props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])])),
-      required: props.filter(p => p.requiredField).map(p => p.$id!),
-      additionalProperties: false,
-    }
-  }
-
-  // Object type (reference)
-  // Can also be Partial<T>, Required<T>, etc
-  if (ts.isTypeReferenceNode(type)) {
-    // Can be StringMap
-    const typeName = (type.typeName as ts.Identifier).text
-
-    if (typeName === 'StringMap') {
-      const valueType: JsonSchema = type.typeArguments?.length
-        ? typeNodeToJsonSchema(type.typeArguments[0]!, file)
-        : { type: 'string' }
+      if (typeName === 'Required') {
+        const valueType = type.typeArguments![0]!
+        const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
+        _assert(s.$ref, 'We only support Required for $ref schemas')
+        s.$ref = $idToRef($refToId(s.$ref) + 'Required')
+        // todo: need to generate ${x}Required schema in 2nd pass
+        return s
+      }
 
       return {
-        type: 'object',
-        additionalProperties: false,
-        required: [],
-        patternProperties: {
-          '.*': valueType,
-        },
+        $ref: $idToRef(typeName),
       }
     }
 
-    if (typeName === 'Partial') {
-      const valueType = type.typeArguments![0]!
-      const s = typeNodeToJsonSchema(valueType, file) as RefJsonSchema
-      _assert(s.$ref, 'We only support Partial for $ref schemas')
-      s.$ref = $idToRef($refToId(s.$ref) + 'Partial')
-      // todo: need to generate ${x}Partial schema in 2nd pass
-      return s
+    // Literal type
+    if (ts.isLiteralTypeNode(type)) {
+      // e.g `someType: 'literal string'`
+      if (ts.isStringLiteral(type.literal)) {
+        return {
+          const: type.literal.text,
+        }
+      } else if (ts.isNumericLiteral(type.literal)) {
+        return {
+          const: Number(type.literal.text),
+        }
+      } else if (
+        type.literal.kind === ts.SyntaxKind.TrueKeyword ||
+        type.literal.kind === ts.SyntaxKind.FalseKeyword
+      ) {
+        return {
+          const: Boolean(type.literal.getText(this.file)),
+        }
+      } else if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
+        return {
+          type: 'null',
+        }
+      } else {
+        console.log(`unknown literal type`, type.literal)
+        throw new Error(`unknown literal type (see above)`)
+      }
     }
 
-    if (typeName === 'Required') {
-      const valueType = type.typeArguments![0]!
-      const s = typeNodeToJsonSchema(valueType, file) as RefJsonSchema
-      _assert(s.$ref, 'We only support Required for $ref schemas')
-      s.$ref = $idToRef($refToId(s.$ref) + 'Required')
-      // todo: need to generate ${x}Required schema in 2nd pass
-      return s
+    // any
+    if (type.kind === ts.SyntaxKind.AnyKeyword) {
+      return {
+        // description: 'any',
+      } // schema matching "anything"
     }
 
-    return {
-      $ref: $idToRef(typeName),
-    }
+    console.log(type)
+    try {
+      console.log(type.getFullText(this.file))
+    } catch {}
+    throw new Error(`unknown type kind: ${type.kind}`)
   }
-
-  // Literal type
-  if (ts.isLiteralTypeNode(type)) {
-    // e.g `someType: 'literal string'`
-    if (ts.isStringLiteral(type.literal)) {
-      return {
-        const: type.literal.text,
-      }
-    } else if (ts.isNumericLiteral(type.literal)) {
-      return {
-        const: Number(type.literal.text),
-      }
-    } else if (
-      type.literal.kind === ts.SyntaxKind.TrueKeyword ||
-      type.literal.kind === ts.SyntaxKind.FalseKeyword
-    ) {
-      return {
-        const: Boolean(type.literal.getText(file)),
-      }
-    } else if (type.literal.kind === ts.SyntaxKind.NullKeyword) {
-      return {
-        type: 'null',
-      }
-    } else {
-      console.log(`unknown literal type`, type.literal)
-      throw new Error(`unknown literal type (see above)`)
-    }
-  }
-
-  // any
-  if (type.kind === ts.SyntaxKind.AnyKeyword) {
-    return {
-      // description: 'any',
-    } // schema matching "anything"
-  }
-
-  console.log(type)
-  try {
-    console.log(type.getFullText(file))
-  } catch {}
-  throw new Error(`unknown type kind: ${type.kind}`)
 }
 
 function parseJsdoc<T extends JsonSchema>(n: ts.Node): Partial<T> {

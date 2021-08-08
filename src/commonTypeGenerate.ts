@@ -1,11 +1,12 @@
-import { pMap, StringMap, _stringMapValues } from '@naturalcycles/js-lib'
+import { pMap, _by, _stringMapValues } from '@naturalcycles/js-lib'
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
 import Ajv from 'ajv'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import { CommonTypeCfg } from './commonTypeCfg'
+import { JsonSchema } from './model'
 import { resourcesDir } from './paths'
-import { JsonSchema, tsFileToJsonSchemas } from './tsToJsonSchema'
+import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
 const commonTypeCfgSchema = new AjvSchema<CommonTypeCfg>(
   fs.readJsonSync(`${resourcesDir}/CommonTypeCfg.schema.json`),
@@ -29,32 +30,18 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
     return console.log('nothing to do, exiting')
   }
 
-  const schemaMap: StringMap<JsonSchema> = {}
-  let errors = 0
+  const schemaMap = _by(
+    tsFilesToJsonSchemas(
+      files.map(fileName => ({
+        fileName,
+        fileString: fs.readFileSync(fileName, 'utf8'),
+      })),
+    ),
+    s => s.$id!,
+  )
 
-  files.forEach(filePath => {
-    try {
-      const fileString = fs.readFileSync(filePath, 'utf8')
-      const schemas = tsFileToJsonSchemas(fileString, filePath)
+  console.log(`${Object.keys(schemaMap).length} schema(s) generated`)
 
-      console.log(`${filePath}: ${schemas.length} schemas(s) generated`)
-      schemas.forEach(s => {
-        if (schemaMap[s.$id!]) {
-          console.warn(
-            `!!! ${s.$id} duplicated in ${filePath}, it will override previous schema with same $id`,
-          )
-        }
-        schemaMap[s.$id!] = s
-      })
-    } catch (err) {
-      errors++
-      console.log(`${filePath} ts parse error:`, err)
-    }
-  })
-
-  console.log(`${Object.keys(schemaMap).length} schema(s) generated, ${errors} errors`)
-
-  // todo: process include/exclude types
   if (includeSchemas?.length) {
     const includeRegexes = includeSchemas.map(s => new RegExp(s))
     Object.keys(schemaMap).forEach(name => {
@@ -105,12 +92,10 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
 
 // Used mostly for debugging
 export function generateSchemasFromFilePaths(filePaths: string[]): JsonSchema[] {
-  const schemas: JsonSchema[] = []
-
-  filePaths.forEach(filePath => {
-    const fileString = fs.readFileSync(filePath, 'utf8')
-    schemas.push(...tsFileToJsonSchemas(fileString, filePath))
-  })
-
-  return schemas
+  return tsFilesToJsonSchemas(
+    filePaths.map(fileName => ({
+      fileName,
+      fileString: fs.readFileSync(fileName, 'utf8'),
+    })),
+  )
 }
