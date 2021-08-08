@@ -4,6 +4,7 @@ import {
   _omit,
   _stringMapValues,
   _substringBefore,
+  _substringBeforeLast,
 } from '@naturalcycles/js-lib'
 import * as ts from 'typescript'
 import { EnumItem, JsonSchema, ObjectJsonSchema, RefJsonSchema } from './model'
@@ -42,7 +43,41 @@ export function tsFilesToJsonSchemas(
     }
   })
 
-  // todo: let's process secondPassSchemas!
+  // Let's do a second pass to process Partial/Required schemas
+
+  secondPassSchemas
+    .filter(s => s.endsWith('Partial'))
+    .forEach(name => {
+      const originalName = _substringBeforeLast(name, 'Partial')
+      const originalSchema = schemaMap[$idToRef(originalName)] as ObjectJsonSchema
+      _assert(originalSchema, `${originalName} schema not found to generate ${name}`)
+
+      const s: ObjectJsonSchema = {
+        ...originalSchema,
+        $id: $idToRef(name),
+        required: [], // Apply Partial effect
+      }
+
+      schemaMap[s.$id!] = s
+    })
+
+  secondPassSchemas
+    .filter(s => s.endsWith('Required'))
+    .forEach(name => {
+      const originalName = _substringBeforeLast(name, 'Required')
+      const originalSchema = schemaMap[$idToRef(originalName)] as ObjectJsonSchema
+      _assert(originalSchema, `${originalName} schema not found to generate ${name}`)
+
+      const s: ObjectJsonSchema = {
+        ...originalSchema,
+        $id: $idToRef(name),
+      }
+
+      // Apply Required effect
+      s.required = Object.keys(s.properties || {})
+
+      schemaMap[s.$id!] = s
+    })
 
   return _stringMapValues(schemaMap)
 }
@@ -53,7 +88,7 @@ export function tsFilesToJsonSchemas(
  * "by-product schemas" such as *Partial, *Required.
  */
 class TSToJSONSchemaGenerator {
-  private secondPassSchemas: string[] = []
+  private secondPassSchemas = new Set<string>()
   private file!: ts.SourceFile
 
   run(
@@ -143,7 +178,7 @@ class TSToJSONSchemaGenerator {
         $schema,
         ...s,
       })),
-      secondPassSchemas: this.secondPassSchemas,
+      secondPassSchemas: [...this.secondPassSchemas],
     }
   }
 
@@ -257,8 +292,11 @@ class TSToJSONSchemaGenerator {
         const valueType = type.typeArguments![0]!
         const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
         _assert(s.$ref, 'We only support Partial for $ref schemas')
-        s.$ref = $idToRef($refToId(s.$ref) + 'Partial')
-        // todo: need to generate ${x}Partial schema in 2nd pass
+
+        const partialSchemaName = $refToId(s.$ref) + 'Partial'
+        this.secondPassSchemas.add(partialSchemaName)
+
+        s.$ref = $idToRef(partialSchemaName)
         return s
       }
 
@@ -266,8 +304,11 @@ class TSToJSONSchemaGenerator {
         const valueType = type.typeArguments![0]!
         const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
         _assert(s.$ref, 'We only support Required for $ref schemas')
-        s.$ref = $idToRef($refToId(s.$ref) + 'Required')
-        // todo: need to generate ${x}Required schema in 2nd pass
+
+        const requiredSchemaName = $refToId(s.$ref) + 'Required'
+        this.secondPassSchemas.add(requiredSchemaName)
+
+        s.$ref = $idToRef(requiredSchemaName)
         return s
       }
 

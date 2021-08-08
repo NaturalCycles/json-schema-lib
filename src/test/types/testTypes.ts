@@ -69,6 +69,11 @@ export interface TestType extends Array<any> {
   intersect?: Person & { id: string }
 }
 
+export interface TestPartialType {
+  part?: Partial<Person>
+  req?: Required<Person>
+}
+
 // Should be excluded by test filters
 export interface ShouldBeExcluded {
   e: string

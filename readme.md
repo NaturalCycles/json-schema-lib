@@ -56,6 +56,7 @@ Typescript AST debugging: https://ts-ast-viewer.com/
 - jsdoc `@validationType` (e.g. `integer`)
 - Type references, e.g. `p: Person` (where `Person` is defined elsewhere, can be in another file)
 - Parsing a list of files (not necessary for all types to be in 1 file)
+- `Partial`, `Required`
 
 ## todo
 
@@ -69,20 +70,10 @@ Non-structural validation:
 
 ## Currently NOT supported
 
-- `Partial`, `Required`
-- `Omit`, `Pick`
-
-Generic interfaces e.g:
-
-```ts
-interface MyType<T> {
-  current: T
-  future: T
-}
-```
-
 - `Record<A, B>`
 - Indexed properties (`{ [name: string]: string }`)
+- `Omit`, `Pick`
+- Generic interfaces, e.g. `interface MyType<T> { current: T, future: T }`
 - `typeof`
 - `keyof`
-- conditional types
+- Conditional types

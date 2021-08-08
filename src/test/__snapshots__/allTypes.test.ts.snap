@@ -373,6 +373,21 @@ la la la",
     "type": "object",
   },
   Object {
+    "$id": "TestPartialType.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "properties": Object {
+      "part": Object {
+        "$ref": "PersonPartial.schema.json",
+      },
+      "req": Object {
+        "$ref": "PersonRequired.schema.json",
+      },
+    },
+    "required": Array [],
+    "type": "object",
+  },
+  Object {
     "$id": "AirtableId.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "string",
@@ -1032,6 +1047,41 @@ In the future - we don't use it:)",
       },
     },
     "required": Array [],
+    "type": "object",
+  },
+  Object {
+    "$id": "PersonPartial.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": true,
+    "description": "Person type comment",
+    "properties": Object {
+      "age": Object {
+        "type": "number",
+      },
+      "name": Object {
+        "type": "string",
+      },
+    },
+    "required": Array [],
+    "type": "object",
+  },
+  Object {
+    "$id": "PersonRequired.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": true,
+    "description": "Person type comment",
+    "properties": Object {
+      "age": Object {
+        "type": "number",
+      },
+      "name": Object {
+        "type": "string",
+      },
+    },
+    "required": Array [
+      "name",
+      "age",
+    ],
     "type": "object",
   },
 ]
