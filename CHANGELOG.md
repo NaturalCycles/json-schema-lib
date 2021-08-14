@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/NaturalCycles/common-type/compare/v1.7.0...v1.8.0) (2021-08-14)
+
+
+### Features
+
+* use JsonSchema interfaces from js-lib ([701f0ab](https://github.com/NaturalCycles/common-type/commit/701f0ab8de7a662c006a170c95e2f2042e85d428))
+
 # [1.7.0](https://github.com/NaturalCycles/common-type/compare/v1.6.0...v1.7.0) (2021-08-14)
 
 
