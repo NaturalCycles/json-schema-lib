@@ -22,9 +22,12 @@ test('type2 schema', () => {
   schema.validate({})
 
   // schema.validate({extra: 1})
-  expect(() => schema.validate({ s: 1, s2: 's' })).toThrowErrorMatchingInlineSnapshot(
-    `"Type2/s must be string"`,
-  )
+  expect(() => schema.validate({ s: 1, s2: 's' })).toThrowErrorMatchingInlineSnapshot(`
+"Type2/s must be string
+Input: {
+  \\"s\\": 1
+}"
+`)
 })
 
 test('baseAddress', () => {

@@ -7,7 +7,7 @@ import {
   _substringBeforeLast,
 } from '@naturalcycles/js-lib'
 import * as ts from 'typescript'
-import { EnumItem, JsonSchema, ObjectJsonSchema, RefJsonSchema } from './model'
+import { EnumItem, JsonSchema, ObjectJsonSchema, RefJsonSchema, StringJsonSchema } from './model'
 
 const ignoreRefs = ['Array']
 
@@ -502,6 +502,15 @@ function processJsdoc(n: ts.Node, s: JsonSchema): void {
       } else {
         s.default = JSON.parse(comment)
       }
+    } else if (tagNameText === 'trim') {
+      ;(s as StringJsonSchema).transform ||= []
+      ;(s as StringJsonSchema).transform!.push('trim')
+    } else if (tagNameText === 'toLowerCase') {
+      ;(s as StringJsonSchema).transform ||= []
+      ;(s as StringJsonSchema).transform!.push('toLowerCase')
+    } else if (tagNameText === 'toUpperCase') {
+      ;(s as StringJsonSchema).transform ||= []
+      ;(s as StringJsonSchema).transform!.push('toUpperCase')
     }
   })
 }

@@ -1,4 +1,4 @@
-import Ajv from 'ajv'
+import { getAjv } from '@naturalcycles/nodejs-lib'
 import * as globby from 'globby'
 import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
 import { testTypesDir } from '../paths'
@@ -9,6 +9,6 @@ test('allTypes', () => {
   expect(schemas).toMatchSnapshot()
 
   // Ensure schemas don't throw ajv errors
-  const ajv = new Ajv({ schemas })
+  const ajv = getAjv({ schemas })
   schemas.forEach(schema => ajv.compile(schema))
 })

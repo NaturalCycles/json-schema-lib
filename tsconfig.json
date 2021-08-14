@@ -5,5 +5,5 @@
     "outDir": "dist"
   },
   "include": ["src"],
-  "exclude": ["**/__exclude"]
+  "exclude": ["**/__exclude", "src/test/model"]
 }

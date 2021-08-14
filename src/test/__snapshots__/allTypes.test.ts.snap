@@ -451,6 +451,14 @@ la la la",
         "required": Array [],
         "type": "object",
       },
+      "email": Object {
+        "format": "email",
+        "transform": Array [
+          "trim",
+          "toLowerCase",
+        ],
+        "type": "string",
+      },
       "n": Object {
         "maximum": 8,
         "minimum": 6,

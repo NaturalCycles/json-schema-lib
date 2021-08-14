@@ -61,6 +61,11 @@ export interface StringJsonSchema extends BaseJsonSchema {
 
   contentMediaType?: string
   contentEncoding?: string // e.g 'base64'
+
+  /**
+   * https://ajv.js.org/packages/ajv-keywords.html#transform
+   */
+  transform?: ('trim' | 'toLowerCase' | 'toUpperCase')[]
 }
 
 export interface NumberJsonSchema extends BaseJsonSchema {

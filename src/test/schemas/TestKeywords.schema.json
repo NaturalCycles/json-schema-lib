@@ -40,6 +40,14 @@
       "minItems": 1,
       "maxItems": 3,
       "uniqueItems": true
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "transform": [
+        "trim",
+        "toLowerCase"
+      ]
     }
   },
   "required": [],

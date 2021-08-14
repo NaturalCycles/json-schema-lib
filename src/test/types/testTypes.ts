@@ -113,6 +113,13 @@ export interface TestKeywords {
    * @uniqueItems
    */
   a?: number[]
+
+  /**
+   * @format email
+   * @trim
+   * @toLowerCase
+   */
+  email?: string
 }
 
 // Should be excluded by test filters
