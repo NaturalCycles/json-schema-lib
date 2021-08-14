@@ -19,7 +19,7 @@ Object {
 }
 `)
 
-  const ajvSchema = new AjvSchema<DeviationReason>(schemas[0])
+  const ajvSchema = new AjvSchema<DeviationReason>(schemas[0]!)
   ajvSchema.validate(DeviationReason.SLEEP)
   expect(ajvSchema.isValid(-2)).toBe(false)
   expect(ajvSchema.isValid('-1' as any)).toBe(false)

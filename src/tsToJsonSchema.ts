@@ -1,4 +1,8 @@
 import {
+  JsonSchema,
+  JsonSchemaObject,
+  JsonSchemaRef,
+  JsonSchemaString,
   StringMap,
   _assert,
   _omit,
@@ -7,7 +11,7 @@ import {
   _substringBeforeLast,
 } from '@naturalcycles/js-lib'
 import * as ts from 'typescript'
-import { EnumItem, JsonSchema, ObjectJsonSchema, RefJsonSchema, StringJsonSchema } from './model'
+import { EnumItem } from './model'
 
 const ignoreRefs = ['Array']
 
@@ -49,10 +53,10 @@ export function tsFilesToJsonSchemas(
     .filter(s => s.endsWith('Partial'))
     .forEach(name => {
       const originalName = _substringBeforeLast(name, 'Partial')
-      const originalSchema = schemaMap[$idToRef(originalName)] as ObjectJsonSchema
+      const originalSchema = schemaMap[$idToRef(originalName)] as JsonSchemaObject
       _assert(originalSchema, `${originalName} schema not found to generate ${name}`)
 
-      const s: ObjectJsonSchema = {
+      const s: JsonSchemaObject = {
         ...originalSchema,
         $id: $idToRef(name),
         required: [], // Apply Partial effect
@@ -65,10 +69,10 @@ export function tsFilesToJsonSchemas(
     .filter(s => s.endsWith('Required'))
     .forEach(name => {
       const originalName = _substringBeforeLast(name, 'Required')
-      const originalSchema = schemaMap[$idToRef(originalName)] as ObjectJsonSchema
+      const originalSchema = schemaMap[$idToRef(originalName)] as JsonSchemaObject
       _assert(originalSchema, `${originalName} schema not found to generate ${name}`)
 
-      const s: ObjectJsonSchema = {
+      const s: JsonSchemaObject = {
         ...originalSchema,
         $id: $idToRef(name),
       }
@@ -104,7 +108,7 @@ class TSToJSONSchemaGenerator {
         // todo: DRY it (currently index properties are broken here)
         const props: JsonSchema[] = n.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
 
-        const s: ObjectJsonSchema = {
+        const s: JsonSchemaObject = {
           $id: $idToRef(n.name!.text),
           type: 'object',
           properties: Object.fromEntries(
@@ -261,7 +265,7 @@ class TSToJSONSchemaGenerator {
     if (ts.isTypeLiteralNode(type)) {
       const props = type.members.map(n => this.nodeToJsonSchema(n)!).filter(Boolean)
 
-      const s: ObjectJsonSchema = {
+      const s: JsonSchemaObject = {
         type: 'object',
         properties: Object.fromEntries(
           props.filter(p => p.$id).map(p => [p.$id, _omit(p, ['$id', 'requiredField'])]),
@@ -332,7 +336,7 @@ class TSToJSONSchemaGenerator {
 
       if (typeName === 'Partial') {
         const valueType = type.typeArguments![0]!
-        const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
+        const s = this.typeNodeToJsonSchema(valueType) as JsonSchemaRef
         _assert(s.$ref, 'We only support Partial for $ref schemas')
 
         const partialSchemaName = $refToId(s.$ref) + 'Partial'
@@ -344,7 +348,7 @@ class TSToJSONSchemaGenerator {
 
       if (typeName === 'Required') {
         const valueType = type.typeArguments![0]!
-        const s = this.typeNodeToJsonSchema(valueType) as RefJsonSchema
+        const s = this.typeNodeToJsonSchema(valueType) as JsonSchemaRef
         _assert(s.$ref, 'We only support Required for $ref schemas')
 
         const requiredSchemaName = $refToId(s.$ref) + 'Required'
@@ -484,7 +488,7 @@ function processJsdoc(n: ts.Node, s: JsonSchema): void {
       s[tagNameText] = JSON.parse(comment)
     } else if (tagNameText === 'propertyNames') {
       _assertIsString(comment)
-      ;(s as ObjectJsonSchema).propertyNames = {
+      ;(s as JsonSchemaObject).propertyNames = {
         type: 'string',
         pattern: comment,
       }
@@ -503,14 +507,14 @@ function processJsdoc(n: ts.Node, s: JsonSchema): void {
         s.default = JSON.parse(comment)
       }
     } else if (tagNameText === 'trim') {
-      ;(s as StringJsonSchema).transform ||= []
-      ;(s as StringJsonSchema).transform!.push('trim')
+      ;(s as JsonSchemaString).transform ||= []
+      ;(s as JsonSchemaString).transform!.push('trim')
     } else if (tagNameText === 'toLowerCase') {
-      ;(s as StringJsonSchema).transform ||= []
-      ;(s as StringJsonSchema).transform!.push('toLowerCase')
+      ;(s as JsonSchemaString).transform ||= []
+      ;(s as JsonSchemaString).transform!.push('toLowerCase')
     } else if (tagNameText === 'toUpperCase') {
-      ;(s as StringJsonSchema).transform ||= []
-      ;(s as StringJsonSchema).transform!.push('toUpperCase')
+      ;(s as JsonSchemaString).transform ||= []
+      ;(s as JsonSchemaString).transform!.push('toUpperCase')
     }
   })
 }

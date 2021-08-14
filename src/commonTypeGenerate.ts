@@ -1,10 +1,8 @@
-import { pMap, _by, _stringMapValues } from '@naturalcycles/js-lib'
-import { AjvSchema } from '@naturalcycles/nodejs-lib'
-import Ajv from 'ajv'
+import { JsonSchema, pMap, _by, _stringMapValues } from '@naturalcycles/js-lib'
+import { AjvSchema, getAjv } from '@naturalcycles/nodejs-lib'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import { CommonTypeCfg } from './commonTypeCfg'
-import { JsonSchema } from './model'
 import { resourcesDir } from './paths'
 import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
@@ -77,7 +75,7 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
 
   // validate schemas with ajv
 
-  const ajv = new Ajv({
+  const ajv = getAjv({
     schemas,
   })
   schemas.forEach(schema => {
