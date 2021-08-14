@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/NaturalCycles/common-type/compare/v1.6.0...v1.7.0) (2021-08-14)
+
+
+### Features
+
+* transform ([258a027](https://github.com/NaturalCycles/common-type/commit/258a02727efb3ed2396c4cb0d0750400f66f3f9a))
+
 # [1.6.0](https://github.com/NaturalCycles/common-type/compare/v1.5.0...v1.6.0) (2021-08-08)
 
 
