@@ -112,9 +112,9 @@ class TSToJSONSchemaGenerator {
           $id: $idToRef(n.name!.text),
           type: 'object',
           properties: Object.fromEntries(
-            props.map(p => [p.$id, _omit(p, ['$id', 'requiredField'])]),
+            props.map(p => [p.$id, _omit(p, ['$id', 'optionalField'])]),
           ),
-          required: props.filter(p => p.requiredField).map(p => p.$id!),
+          required: props.filter(p => !p.optionalField).map(p => p.$id!),
           additionalProperties: false,
         }
 
@@ -199,7 +199,7 @@ class TSToJSONSchemaGenerator {
 
     const schema = this.typeNodeToJsonSchema(n.type)
 
-    if (!n.questionToken) schema.requiredField = true
+    if (n.questionToken) schema.optionalField = true
 
     if ((n.name as ts.Identifier)?.text !== undefined) {
       schema.$id = (n.name as ts.Identifier).text
@@ -268,9 +268,9 @@ class TSToJSONSchemaGenerator {
       const s: JsonSchemaObject = {
         type: 'object',
         properties: Object.fromEntries(
-          props.filter(p => p.$id).map(p => [p.$id, _omit(p, ['$id', 'requiredField'])]),
+          props.filter(p => p.$id).map(p => [p.$id, _omit(p, ['$id', 'optionalField'])]),
         ),
-        required: props.filter(p => p.requiredField && p.$id).map(p => p.$id!),
+        required: props.filter(p => !p.optionalField && p.$id).map(p => p.$id!),
         additionalProperties: false,
       }
 
