@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/NaturalCycles/common-type/compare/v1.8.0...v1.8.1) (2021-08-14)
+
+
+### Bug Fixes
+
+* adapt to optionalField insead of requiredField ([e22fabe](https://github.com/NaturalCycles/common-type/commit/e22fabe88d1ded39d06b186357c4b403900b49b7))
+
 # [1.8.0](https://github.com/NaturalCycles/common-type/compare/v1.7.0...v1.8.0) (2021-08-14)
 
 
