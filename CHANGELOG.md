@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/NaturalCycles/common-type/compare/v1.8.1...v1.8.2) (2021-08-27)
+
+
+### Bug Fixes
+
+* deps ([425e182](https://github.com/NaturalCycles/common-type/commit/425e182fe16c021c5933ea982e59208b84100e64))
+
 ## [1.8.1](https://github.com/NaturalCycles/common-type/compare/v1.8.0...v1.8.1) (2021-08-14)
 
 
