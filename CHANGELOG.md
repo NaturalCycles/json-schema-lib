@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/NaturalCycles/common-type/compare/v1.8.2...v1.9.0) (2021-08-30)
+
+
+### Features
+
+* jsonSchemaToTS ([f9910ca](https://github.com/NaturalCycles/common-type/commit/f9910caac3cad5813e76c5c3a95f1126c94465fa))
+
 ## [1.8.2](https://github.com/NaturalCycles/common-type/compare/v1.8.1...v1.8.2) (2021-08-27)
 
 
