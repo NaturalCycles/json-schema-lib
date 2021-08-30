@@ -3,24 +3,12 @@
   "$id": "UserFertilityStats.schema.json",
   "type": "object",
   "properties": {
-    "lowTempMean": {
-      "type": "number"
-    },
-    "lowTempRMS": {
-      "type": "number"
-    },
-    "highTempMean": {
-      "type": "number"
-    },
-    "highTempRMS": {
-      "type": "number"
-    },
-    "pregTempMean": {
-      "type": "number"
-    },
-    "pregTempRMS": {
-      "type": "number"
-    }
+    "lowTempMean": { "type": "number" },
+    "lowTempRMS": { "type": "number" },
+    "highTempMean": { "type": "number" },
+    "highTempRMS": { "type": "number" },
+    "pregTempMean": { "type": "number" },
+    "pregTempRMS": { "type": "number" }
   },
   "required": [],
   "additionalProperties": false

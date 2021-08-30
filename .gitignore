@@ -49,3 +49,5 @@ node_modules
 /logs
 /www/*
 !/www/.gitkeep
+
+/src/test/model

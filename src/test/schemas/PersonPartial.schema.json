@@ -1,16 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "PersonPartial.schema.json",
+  "description": "Person type comment",
   "type": "object",
-  "properties": {
-    "name": {
-      "type": "string"
-    },
-    "age": {
-      "type": "number"
-    }
-  },
+  "properties": { "name": { "type": "string" }, "age": { "type": "number" } },
   "required": [],
-  "additionalProperties": true,
-  "description": "Person type comment"
+  "additionalProperties": true
 }

@@ -5,21 +5,12 @@
     {
       "type": "object",
       "properties": {
-        "dataFlags": {
-          "type": "array",
-          "items": {
-            "$ref": "DataFlag.schema.json"
-          }
-        },
-        "mensQuantity": {
-          "$ref": "DataQuantity.schema.json"
-        }
+        "dataFlags": { "type": "array", "items": { "$ref": "DataFlag.schema.json" } },
+        "mensQuantity": { "$ref": "DataQuantity.schema.json" }
       },
       "required": [],
       "additionalProperties": false
     },
-    {
-      "$ref": "BaseColorCode.schema.json"
-    }
+    { "$ref": "BaseColorCode.schema.json" }
   ]
 }

@@ -1,11 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "CurrentPhaseId.schema.json",
-  "enum": [
-    1,
-    2,
-    3,
-    4,
-    5
-  ]
+  "enum": [1, 2, 3, 4, 5]
 }

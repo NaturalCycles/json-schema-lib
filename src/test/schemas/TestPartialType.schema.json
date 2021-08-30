@@ -3,12 +3,8 @@
   "$id": "TestPartialType.schema.json",
   "type": "object",
   "properties": {
-    "part": {
-      "$ref": "PersonPartial.schema.json"
-    },
-    "req": {
-      "$ref": "PersonRequired.schema.json"
-    }
+    "part": { "$ref": "PersonPartial.schema.json" },
+    "req": { "$ref": "PersonRequired.schema.json" }
   },
   "required": [],
   "additionalProperties": false

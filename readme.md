@@ -5,8 +5,10 @@
 [![npm](https://img.shields.io/npm/v/@naturalcycles/common-type/latest.svg)](https://www.npmjs.com/package/@naturalcycles/common-type)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Allows to generate "Common Type" and [JSON Schema](https://json-schema.org/) from a set of
-Typescript files with Interfaces (also Types and Enums).
+Allows to generate [JSON Schema](https://json-schema.org/) from a set of Typescript files with
+Interfaces (also Types and Enums).
+
+Also, to generate Typescript files from JSON schemas (reverse).
 
 Status: experimental! Everything is subject to change!
 
@@ -68,15 +70,6 @@ Typescript AST debugging: https://ts-ast-viewer.com/
   - Array: `minItems`, `maxItems`, `uniqueItems`
   - Schema composition: `if`, `then`, `else`, `dependencies`, `dependentRequired`,
     `dependentSchemas`
-
-## todo
-
-Non-structural validation:
-
-- [ ] unixTimestamp type
-- [ ] isoDate type
-- [ ] email type (regex)
-- [ ] id type
 
 ## Currently NOT supported
 

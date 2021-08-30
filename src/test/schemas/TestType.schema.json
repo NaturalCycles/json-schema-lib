@@ -3,86 +3,37 @@
   "$id": "TestType.schema.json",
   "type": "object",
   "properties": {
-    "s": {
-      "type": "string"
-    },
-    "n": {
-      "type": "null"
-    },
-    "s2": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
+    "s": { "type": "string" },
+    "n": { "type": "null" },
+    "s2": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
     "p": {
       "type": "array",
-      "items": {
-        "oneOf": [
-          {
-            "$ref": "Person.schema.json"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      }
+      "items": { "oneOf": [{ "$ref": "Person.schema.json" }, { "type": "null" }] }
     },
     "lhdays": {
       "type": "array",
       "items": {
         "type": "array",
-        "items": [
-          {
-            "type": "number"
-          },
-          {
-            "type": "number"
-          }
-        ],
+        "items": [{ "type": "number" }, { "type": "number" }],
         "minItems": 2,
         "maxItems": 2
       }
     },
-    "lit": {
-      "const": "some string"
-    },
-    "nlit": {
-      "const": 26
-    },
-    "litb": {
-      "const": true
-    },
+    "lit": { "const": "some string" },
+    "nlit": { "const": 26 },
+    "litb": { "const": true },
     "intersect": {
       "allOf": [
-        {
-          "$ref": "Person.schema.json"
-        },
+        { "$ref": "Person.schema.json" },
         {
           "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "id"
-          ],
+          "properties": { "id": { "type": "string" } },
+          "required": ["id"],
           "additionalProperties": false
         }
       ]
     }
   },
-  "required": [
-    "s",
-    "n",
-    "s2",
-    "p",
-    "lhdays"
-  ],
+  "required": ["s", "n", "s2", "p", "lhdays"],
   "additionalProperties": false
 }

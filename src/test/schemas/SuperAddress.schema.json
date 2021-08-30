@@ -4,21 +4,11 @@
   "allOf": [
     {
       "type": "object",
-      "properties": {
-        "address3": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "address3"
-      ],
+      "properties": { "address3": { "type": "string" } },
+      "required": ["address3"],
       "additionalProperties": false
     },
-    {
-      "$ref": "BaseAddress.schema.json"
-    },
-    {
-      "$ref": "Person.schema.json"
-    }
+    { "$ref": "BaseAddress.schema.json" },
+    { "$ref": "Person.schema.json" }
   ]
 }

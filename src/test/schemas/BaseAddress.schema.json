@@ -3,65 +3,23 @@
   "$id": "BaseAddress.schema.json",
   "type": "object",
   "properties": {
-    "address1": {
-      "type": "string"
-    },
-    "address2": {
-      "type": "string"
-    },
-    "ts": {
-      "type": "number",
-      "description": "asdf\n\nla la la"
-    },
-    "int": {
-      "type": "integer"
-    },
-    "home": {
-      "type": "boolean"
-    },
-    "a1": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "a2": {
-      "type": "array",
-      "items": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      }
-    },
+    "address1": { "type": "string" },
+    "address2": { "type": "string" },
+    "ts": { "type": "number", "description": "asdf\n\nla la la" },
+    "int": { "type": "integer" },
+    "home": { "type": "boolean" },
+    "a1": { "type": "array", "items": { "type": "string" } },
+    "a2": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } },
     "o1": {
       "type": "object",
-      "properties": {
-        "a": {
-          "type": "string"
-        },
-        "b": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "a",
-        "b"
-      ],
+      "properties": { "a": { "type": "string" }, "b": { "type": "number" } },
+      "required": ["a", "b"],
       "additionalProperties": false
     },
-    "p": {
-      "$ref": "Person.schema.json"
-    },
-    "c": {
-      "$ref": "Consent.schema.json"
-    },
-    "n": {
-      "$ref": "NumberEnum.schema.json"
-    }
+    "p": { "$ref": "Person.schema.json" },
+    "c": { "$ref": "Consent.schema.json" },
+    "n": { "$ref": "NumberEnum.schema.json" }
   },
-  "required": [
-    "address1"
-  ],
+  "required": ["address1"],
   "additionalProperties": false
 }

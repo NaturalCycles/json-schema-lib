@@ -3,19 +3,10 @@
   "$id": "C.schema.json",
   "type": "object",
   "properties": {
-    "s": {
-      "type": "string"
-    },
-    "maybe": {
-      "type": "string"
-    },
-    "a": {
-      "type": "string"
-    }
+    "s": { "type": "string" },
+    "maybe": { "type": "string" },
+    "a": { "type": "string" }
   },
-  "required": [
-    "s",
-    "a"
-  ],
+  "required": ["s", "a"],
   "additionalProperties": false
 }

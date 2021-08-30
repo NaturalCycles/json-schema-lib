@@ -7,28 +7,16 @@
       "type": "object",
       "additionalProperties": false,
       "required": [],
-      "patternProperties": {
-        ".*": {
-          "type": "number"
-        }
-      }
+      "patternProperties": { ".*": { "type": "number" } }
     },
     "strMap": {
       "type": "object",
       "properties": {},
-      "required": [
-        "req"
-      ],
+      "required": ["req"],
       "additionalProperties": false,
-      "patternProperties": {
-        ".*": {
-          "type": "number"
-        }
-      }
+      "patternProperties": { ".*": { "type": "number" } }
     }
   },
-  "required": [
-    "strMap"
-  ],
+  "required": ["strMap"],
   "additionalProperties": false
 }

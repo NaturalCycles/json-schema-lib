@@ -5,224 +5,89 @@
     {
       "type": "object",
       "properties": {
-        "v": {
-          "type": "number"
-        },
-        "algoVersion": {
-          "type": "string"
-        },
+        "v": { "type": "number" },
+        "algoVersion": { "type": "string" },
         "fahrenheit": {
           "type": "boolean",
           "description": "Can be undefined in older versions of UserFertilityCache!"
         },
-        "startDate": {
-          "type": "string"
-        },
-        "todayDate": {
-          "type": "string"
-        },
-        "lastDate": {
-          "type": "string"
-        },
-        "conceptionDate": {
-          "type": "string"
-        },
-        "dueDate": {
-          "type": "string"
-        },
-        "minPossiblePregnancyEndedDate": {
-          "type": "string"
-        },
-        "greenDays": {
-          "type": "number"
-        },
-        "redDays": {
-          "type": "number"
-        },
-        "yellowDays": {
-          "type": "number"
-        },
-        "dataActivity": {
-          "type": "number"
-        },
-        "noOCycles": {
-          "type": "array",
-          "items": {
-            "type": "boolean"
-          }
-        },
+        "startDate": { "type": "string" },
+        "todayDate": { "type": "string" },
+        "lastDate": { "type": "string" },
+        "conceptionDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "minPossiblePregnancyEndedDate": { "type": "string" },
+        "greenDays": { "type": "number" },
+        "redDays": { "type": "number" },
+        "yellowDays": { "type": "number" },
+        "dataActivity": { "type": "number" },
+        "noOCycles": { "type": "array", "items": { "type": "boolean" } },
         "cycleLengths": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "ovulationDays": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "predOvulationDays": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "ovulationWindowMin": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "ovulationWindowMax": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "mensLengths": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "type": "number" }, { "type": "null" }] }
         },
         "cycleSummaries": {
           "type": "array",
-          "items": {
-            "oneOf": [
-              {
-                "$ref": "CycleSummary.schema.json"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
+          "items": { "oneOf": [{ "$ref": "CycleSummary.schema.json" }, { "type": "null" }] }
         },
-        "currentPhase": {
-          "$ref": "CurrentPhase.schema.json"
-        },
+        "currentPhase": { "$ref": "CurrentPhase.schema.json" },
         "lhdays": {
           "type": "array",
           "items": {
             "type": "array",
-            "items": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "number"
-              }
-            ],
+            "items": [{ "type": "number" }, { "type": "number" }],
             "minItems": 2,
             "maxItems": 2
           }
         },
-        "clave": {
-          "type": "number"
-        },
-        "claveRMS": {
-          "type": "number"
-        },
-        "greenbfO": {
-          "type": "number"
-        },
-        "lpave": {
-          "type": "number"
-        },
-        "lpaveRMS": {
-          "type": "number"
-        },
-        "mdays": {
-          "type": "number"
-        },
-        "mdaysRMS": {
-          "type": "number"
-        },
-        "ncycles": {
-          "type": "number"
-        },
-        "oave": {
-          "type": "number"
-        },
-        "oaveRMS": {
-          "type": "number"
-        },
-        "pregnantNow": {
-          "type": "boolean"
-        },
+        "clave": { "type": "number" },
+        "claveRMS": { "type": "number" },
+        "greenbfO": { "type": "number" },
+        "lpave": { "type": "number" },
+        "lpaveRMS": { "type": "number" },
+        "mdays": { "type": "number" },
+        "mdaysRMS": { "type": "number" },
+        "ncycles": { "type": "number" },
+        "oave": { "type": "number" },
+        "oaveRMS": { "type": "number" },
+        "pregnantNow": { "type": "boolean" },
         "entryMap": {
           "type": "object",
           "additionalProperties": false,
           "required": [],
-          "patternProperties": {
-            ".*": {
-              "$ref": "DailyEntryBM.schema.json"
-            }
-          }
+          "patternProperties": { ".*": { "$ref": "DailyEntryBM.schema.json" } }
         },
         "colorMap": {
           "type": "object",
           "additionalProperties": false,
           "required": [],
-          "patternProperties": {
-            ".*": {
-              "$ref": "UFColorCode.schema.json"
-            }
-          }
+          "patternProperties": { ".*": { "$ref": "UFColorCode.schema.json" } }
         },
         "predictionMap": {
           "type": "object",
           "additionalProperties": false,
           "required": [],
-          "patternProperties": {
-            ".*": {
-              "$ref": "UFPredictionColorCode.schema.json"
-            }
-          }
+          "patternProperties": { ".*": { "$ref": "UFPredictionColorCode.schema.json" } }
         }
       },
       "required": [
@@ -258,8 +123,6 @@
       ],
       "additionalProperties": false
     },
-    {
-      "$ref": "UserFertilityStats.schema.json"
-    }
+    { "$ref": "UserFertilityStats.schema.json" }
   ]
 }

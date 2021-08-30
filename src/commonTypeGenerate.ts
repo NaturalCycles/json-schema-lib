@@ -1,9 +1,10 @@
-import { JsonSchema, pMap, _by, _stringMapValues } from '@naturalcycles/js-lib'
+import { JsonSchema, _by, _stringMapValues } from '@naturalcycles/js-lib'
 import { AjvSchema, getAjv } from '@naturalcycles/nodejs-lib'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
 import { CommonTypeCfg } from './commonTypeCfg'
 import { resourcesDir } from './paths'
+import { prettify } from './prettier.util'
 import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
 const commonTypeCfgSchema = new AjvSchema<CommonTypeCfg>(
@@ -11,7 +12,7 @@ const commonTypeCfgSchema = new AjvSchema<CommonTypeCfg>(
   { logErrors: true },
 )
 
-export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
+export function commonTypeGenerate(cfg: CommonTypeCfg): void {
   const log: (...args: any[]) => void = cfg.debug ? (...args) => console.log(...args) : () => {}
 
   // Validate cfg (dog-fooding)
@@ -67,8 +68,8 @@ export async function commonTypeGenerate(cfg: CommonTypeCfg): Promise<void> {
     return console.log(`no schemas to write, exiting`)
   }
 
-  await pMap(schemas, async schema => {
-    await fs.writeJson(`${outputDir}/${schema.$id}`, schema, { spaces: 2 })
+  schemas.forEach(schema => {
+    fs.writeFileSync(`${outputDir}/${schema.$id}`, prettify(JSON.stringify(schema), 'json'))
   })
 
   console.log(`${schemas.length} json schema(s) saved`)

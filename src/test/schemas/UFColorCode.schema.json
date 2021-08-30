@@ -4,18 +4,10 @@
   "allOf": [
     {
       "type": "object",
-      "properties": {
-        "cycleStartDate": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "cycleStartDate"
-      ],
+      "properties": { "cycleStartDate": { "type": "string" } },
+      "required": ["cycleStartDate"],
       "additionalProperties": false
     },
-    {
-      "$ref": "BaseColorCode.schema.json"
-    }
+    { "$ref": "BaseColorCode.schema.json" }
   ]
 }

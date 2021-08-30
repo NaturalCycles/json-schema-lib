@@ -3,25 +3,11 @@
   "$id": "CurrentPhase.schema.json",
   "type": "object",
   "properties": {
-    "id": {
-      "$ref": "CurrentPhaseId.schema.json"
-    },
-    "trackersGeneric": {
-      "type": "boolean"
-    },
-    "dataFlags": {
-      "type": "array",
-      "items": {
-        "$ref": "DataFlag.schema.json"
-      }
-    },
-    "libido": {
-      "$ref": "Libido.schema.json"
-    }
+    "id": { "$ref": "CurrentPhaseId.schema.json" },
+    "trackersGeneric": { "type": "boolean" },
+    "dataFlags": { "type": "array", "items": { "$ref": "DataFlag.schema.json" } },
+    "libido": { "$ref": "Libido.schema.json" }
   },
-  "required": [
-    "id",
-    "dataFlags"
-  ],
+  "required": ["id", "dataFlags"],
   "additionalProperties": false
 }

@@ -8,7 +8,7 @@ import * as ts from 'typescript'
 import { CommonTypeCfg } from '../commonTypeCfg'
 import { commonTypeGenerate } from '../commonTypeGenerate'
 
-runScript(async () => {
+runScript(() => {
   const started = Date.now()
   const cwd = process.cwd()
   const cfgPath = `${cwd}/commonType.cfg.js`
@@ -21,7 +21,7 @@ runScript(async () => {
   console.log(dimGrey(`typescript ${ts.version}`))
   console.log(cfg)
 
-  await commonTypeGenerate(cfg)
+  commonTypeGenerate(cfg)
 
   console.log(boldWhite('common-type generate done') + dimGrey(' in ' + _since(started)))
 })

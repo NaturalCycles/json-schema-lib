@@ -3,9 +3,11 @@ import {
   JsonSchemaObject,
   JsonSchemaRef,
   JsonSchemaString,
+  JSON_SCHEMA_ORDER,
   StringMap,
   _assert,
   _omit,
+  _sortObject,
   _stringMapValues,
   _substringBefore,
   _substringBeforeLast,
@@ -83,7 +85,7 @@ export function tsFilesToJsonSchemas(
       schemaMap[s.$id!] = s
     })
 
-  return _stringMapValues(schemaMap)
+  return _stringMapValues(schemaMap).map(s => _sortObject(s, JSON_SCHEMA_ORDER as any))
 }
 
 /**
@@ -519,10 +521,10 @@ function processJsdoc(n: ts.Node, s: JsonSchema): void {
   })
 }
 
-function $idToRef($id: string): string {
+export function $idToRef($id: string): string {
   return `${$id}.schema.json`
 }
 
-function $refToId($ref: string): string {
+export function $refToId($ref: string): string {
   return _substringBefore($ref, '.schema.json')
 }

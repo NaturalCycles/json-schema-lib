@@ -10,45 +10,24 @@
       "pattern": "A[a-z]{1,4}",
       "default": "Abc"
     },
-    "n": {
-      "type": "integer",
-      "multipleOf": 2,
-      "minimum": 6,
-      "maximum": 8
-    },
+    "n": { "type": "integer", "multipleOf": 2, "minimum": 6, "maximum": 8 },
     "dateMap": {
       "type": "object",
       "additionalProperties": false,
       "required": [],
-      "patternProperties": {
-        ".*": {
-          "type": "string"
-        }
-      },
-      "propertyNames": {
-        "type": "string",
-        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
-      },
+      "patternProperties": { ".*": { "type": "string" } },
+      "propertyNames": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
       "minProperties": 1,
       "maxProperties": 3
     },
     "a": {
       "type": "array",
-      "items": {
-        "type": "number"
-      },
+      "items": { "type": "number" },
       "minItems": 1,
       "maxItems": 3,
       "uniqueItems": true
     },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "transform": [
-        "trim",
-        "toLowerCase"
-      ]
-    }
+    "email": { "type": "string", "format": "email", "transform": ["trim", "toLowerCase"] }
   },
   "required": [],
   "additionalProperties": false
