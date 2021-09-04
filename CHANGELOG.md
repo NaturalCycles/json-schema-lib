@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/NaturalCycles/common-type/compare/v1.9.0...v1.9.1) (2021-09-04)
+
+
+### Bug Fixes
+
+* deps ([ab1899d](https://github.com/NaturalCycles/common-type/commit/ab1899dff7c73ecfb3f757bd4c65990307d4b163))
+
 # [1.9.0](https://github.com/NaturalCycles/common-type/compare/v1.8.2...v1.9.0) (2021-08-30)
 
 
