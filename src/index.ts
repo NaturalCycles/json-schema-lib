@@ -1,8 +1,8 @@
-import { CommonTypeCfg } from './commonTypeCfg'
-import { commonTypeGenerate, generateSchemasFromFilePaths } from './commonTypeGenerate'
+import { generateSchemasFromFilePaths, jsonSchemaGenerate } from './jsonSchemaGenerate'
+import { JsonSchemaGeneratorCfg } from './jsonSchemaGeneratorCfg'
 import { FileWithContent, jsonSchemasToTS } from './jsonSchemaToTS'
 import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
-export type { CommonTypeCfg, FileWithContent }
+export type { JsonSchemaGeneratorCfg, FileWithContent }
 
-export { commonTypeGenerate, tsFilesToJsonSchemas, generateSchemasFromFilePaths, jsonSchemasToTS }
+export { jsonSchemaGenerate, tsFilesToJsonSchemas, generateSchemasFromFilePaths, jsonSchemasToTS }

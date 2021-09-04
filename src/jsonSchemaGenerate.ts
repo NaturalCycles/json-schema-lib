@@ -2,20 +2,20 @@ import { JsonSchema, _by, _stringMapValues } from '@naturalcycles/js-lib'
 import { AjvSchema, getAjv } from '@naturalcycles/nodejs-lib'
 import * as fs from 'fs-extra'
 import * as globby from 'globby'
-import { CommonTypeCfg } from './commonTypeCfg'
+import { JsonSchemaGeneratorCfg } from './jsonSchemaGeneratorCfg'
 import { resourcesDir } from './paths'
 import { prettify } from './prettier.util'
 import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
-const commonTypeCfgSchema = AjvSchema.readJsonSync<CommonTypeCfg>(
-  `${resourcesDir}/CommonTypeCfg.schema.json`,
+const jsonSchemaGeneratorCfgSchema = AjvSchema.readJsonSync<JsonSchemaGeneratorCfg>(
+  `${resourcesDir}/JSONSchemaGeneratorCfg.schema.json`,
 )
 
-export function commonTypeGenerate(cfg: CommonTypeCfg): void {
+export function jsonSchemaGenerate(cfg: JsonSchemaGeneratorCfg): void {
   const log: (...args: any[]) => void = cfg.debug ? (...args) => console.log(...args) : () => {}
 
   // Validate cfg (dog-fooding)
-  commonTypeCfgSchema.validate(cfg)
+  jsonSchemaGeneratorCfgSchema.validate(cfg)
 
   const { paths, outputDir, includeSchemas, excludeSchemas } = cfg
 

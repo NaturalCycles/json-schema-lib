@@ -5,23 +5,23 @@ import { requireFileToExist } from '@naturalcycles/nodejs-lib'
 import { boldWhite, dimGrey } from '@naturalcycles/nodejs-lib/dist/colors'
 import { runScript } from '@naturalcycles/nodejs-lib/dist/script'
 import * as ts from 'typescript'
-import { CommonTypeCfg } from '../commonTypeCfg'
-import { commonTypeGenerate } from '../commonTypeGenerate'
+import { jsonSchemaGenerate } from '../jsonSchemaGenerate'
+import { JsonSchemaGeneratorCfg } from '../jsonSchemaGeneratorCfg'
 
 runScript(() => {
   const started = Date.now()
   const cwd = process.cwd()
-  const cfgPath = `${cwd}/commonType.cfg.js`
+  const cfgPath = `${cwd}/jsonSchemaGenerator.cfg.js`
 
   requireFileToExist(cfgPath)
 
-  const cfg: CommonTypeCfg = require(`${cwd}/commonType.cfg`)
+  const cfg: JsonSchemaGeneratorCfg = require(`${cwd}/jsonSchemaGenerator.cfg`)
 
-  console.log(boldWhite('common-type generate started'))
+  console.log(boldWhite('jsonSchemaGenerator started'))
   console.log(dimGrey(`typescript ${ts.version}`))
   console.log(cfg)
 
-  commonTypeGenerate(cfg)
+  jsonSchemaGenerate(cfg)
 
-  console.log(boldWhite('common-type generate done') + dimGrey(' in ' + _since(started)))
+  console.log(boldWhite('jsonSchemaGenerator done') + dimGrey(' in ' + _since(started)))
 })

@@ -1,4 +1,4 @@
-export interface CommonTypeCfg {
+export interface JsonSchemaGeneratorCfg {
   /**
    * Array of paths to scan interfaces in.
    * Globs are allowed (using `globby` package).

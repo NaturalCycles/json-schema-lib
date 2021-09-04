@@ -1,6 +1,6 @@
 import { getAjv } from '@naturalcycles/nodejs-lib'
 import * as globby from 'globby'
-import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
+import { generateSchemasFromFilePaths } from '../jsonSchemaGenerate'
 import { testTypesDir } from '../paths'
 
 test('allTypes', () => {

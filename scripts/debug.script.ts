@@ -7,7 +7,7 @@ yarn tsn debug
 import { runScript } from '@naturalcycles/nodejs-lib/dist/script'
 import Ajv from 'ajv'
 import * as fs from 'fs-extra'
-import { generateSchemasFromFilePaths } from '../src/commonTypeGenerate'
+import { generateSchemasFromFilePaths } from '../src'
 import { testDir, tmpDir } from '../src/paths'
 
 runScript(async () => {

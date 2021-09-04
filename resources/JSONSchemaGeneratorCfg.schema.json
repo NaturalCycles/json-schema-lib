@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "CommonTypeCfg.schema.json",
+  "$id": "JSONSchemaGeneratorCfg.schema.json",
   "type": "object",
   "additionalProperties": false,
   "properties": {
@@ -27,17 +27,10 @@
         "type": "string"
       }
     },
-    "writeAST": {
-      "type": "boolean",
-      "description": "Set to true to output `${name}.ast.json` files aka CommonType AST.\nNote! CommonType AST is unstable/experimental and subject to change!"
-    },
     "debug": {
       "type": "boolean",
       "description": "Set to true to enable debug logging."
     }
   },
-  "required": [
-    "paths",
-    "outputDir"
-  ]
+  "required": ["paths", "outputDir"]
 }

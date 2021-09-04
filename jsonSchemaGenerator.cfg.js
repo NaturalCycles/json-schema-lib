@@ -1,11 +1,10 @@
 const cfg = {
-  paths: ['src/test/types/*.ts', 'src/commonTypeCfg.ts'],
+  paths: ['src/test/types/*.ts', 'src/jsonSchemaGeneratorCfg.ts'],
   outputDir: 'src/test/schemas',
   // paths: ['src/test/model/*.ts'],
   // outputDir: 'src/test/model/schemas',
   // includeSchemas: [],
   excludeSchemas: ['Excluded'],
-  writeAST: true,
   debug: true,
 }
 

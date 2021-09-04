@@ -1,8 +1,8 @@
-## @naturalcycles/common-type
+## @naturalcycles/json-schema-lib
 
-> Common Type interface and generator
+> JSON schema to/from TypeScript parser/generator
 
-[![npm](https://img.shields.io/npm/v/@naturalcycles/common-type/latest.svg)](https://www.npmjs.com/package/@naturalcycles/common-type)
+[![npm](https://img.shields.io/npm/v/@naturalcycles/json-schema-lib/latest.svg)](https://www.npmjs.com/package/@naturalcycles/json-schema-lib)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Allows to generate [JSON Schema](https://json-schema.org/) from a set of Typescript files with
@@ -14,21 +14,21 @@ Status: experimental! Everything is subject to change!
 
 # Example
 
-Install `common-type` as your devDependency:
+Install `json-schema-lib` as your devDependency:
 
-    yarn add -D @naturacycles/common-type
+    yarn add -D @naturacycles/json-schema-lib
 
-Define a `commonType.cfg.js` in the root of you project:
+Define a `jsonSchemaGenerator.cfg.js` in the root of you project:
 
 ```js
 module.exports = {
   paths: ['src/types/*.ts'],
-  outputDir: 'src/schemas',
+  outputDir: 'resources/schemas',
 }
 ```
 
 Config says to scan all `*.ts` files in `src/types`, parse them, generate JSON schemas, write them
-into `src/schemas` folder.
+into `resources/schemas` folder.
 
 ## Similar projects
 

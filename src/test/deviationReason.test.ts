@@ -1,6 +1,6 @@
 import { JsonSchema } from '@naturalcycles/js-lib'
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
-import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
+import { generateSchemasFromFilePaths } from '../jsonSchemaGenerate'
 import { testTypesDir } from '../paths'
 import { DeviationReason } from './types/deviationReason'
 
