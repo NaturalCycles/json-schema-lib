@@ -21,7 +21,7 @@ const stringEnumSchema: JsonSchemaEnum = {
   enum: ['TIRED', 'BORED', 'STRESSED'],
 }
 
-const addressSchema: JsonSchema = {
+const addressSchema: JsonSchema<any> = {
   $id: 'Address.schema.json',
   type: 'object',
   properties: {

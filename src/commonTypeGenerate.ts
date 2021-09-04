@@ -7,9 +7,8 @@ import { resourcesDir } from './paths'
 import { prettify } from './prettier.util'
 import { tsFilesToJsonSchemas } from './tsToJsonSchema'
 
-const commonTypeCfgSchema = new AjvSchema<CommonTypeCfg>(
-  fs.readJsonSync(`${resourcesDir}/CommonTypeCfg.schema.json`),
-  { logErrors: true },
+const commonTypeCfgSchema = AjvSchema.readJsonSync<CommonTypeCfg>(
+  `${resourcesDir}/CommonTypeCfg.schema.json`,
 )
 
 export function commonTypeGenerate(cfg: CommonTypeCfg): void {

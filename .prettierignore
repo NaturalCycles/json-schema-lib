@@ -1,5 +1,4 @@
 #
 # .prettierignore
 #
-**/*.ast.json
-**/*.schema.json
+

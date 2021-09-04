@@ -1,3 +1,4 @@
+import { JsonSchema } from '@naturalcycles/js-lib'
 import { AjvSchema } from '@naturalcycles/nodejs-lib'
 import { generateSchemasFromFilePaths } from '../commonTypeGenerate'
 import { testTypesDir } from '../paths'
@@ -19,7 +20,7 @@ Object {
 }
 `)
 
-  const ajvSchema = new AjvSchema<DeviationReason>(schemas[0]!)
+  const ajvSchema = AjvSchema.create(schemas[0] as JsonSchema<DeviationReason>)
   ajvSchema.validate(DeviationReason.SLEEP)
   expect(ajvSchema.isValid(-2)).toBe(false)
   expect(ajvSchema.isValid('-1' as any)).toBe(false)

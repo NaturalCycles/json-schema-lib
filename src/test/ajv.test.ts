@@ -11,7 +11,7 @@ const consentSchema = fs.readJsonSync(`${testSchemasDir}/Consent.schema.json`)
 const numberEnumSchema = fs.readJsonSync(`${testSchemasDir}/NumberEnum.schema.json`)
 
 test('type2 schema', () => {
-  const schema = new AjvSchema(type2Schema)
+  const schema = AjvSchema.create<Type2>(type2Schema)
 
   const v1: Type2 = {
     s: 'sdf',
@@ -22,14 +22,14 @@ test('type2 schema', () => {
   schema.validate({})
 
   // schema.validate({extra: 1})
-  expect(() => schema.validate({ s: 1, s2: 's' })).toThrowErrorMatchingInlineSnapshot(`
+  expect(() => schema.validate({ s: 1, s2: 's' } as any)).toThrowErrorMatchingInlineSnapshot(`
 "Type2/s must be string
 Input: { s: 1 }"
 `)
 })
 
 test('baseAddress', () => {
-  const schema = new AjvSchema<BaseAddress>(baseAddressSchema, {
+  const schema = AjvSchema.create<BaseAddress>(baseAddressSchema, {
     schemas: [personSchema, consentSchema, numberEnumSchema],
   })
 
@@ -46,7 +46,7 @@ test('baseAddress', () => {
 })
 
 test('testType', () => {
-  const schema = new AjvSchema<TestType>(testTypeSchema, {
+  const schema = AjvSchema.create<TestType>(testTypeSchema, {
     schemas: [personSchema],
   })
 

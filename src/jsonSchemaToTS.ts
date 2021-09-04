@@ -77,7 +77,7 @@ class JsonSchemaToTSGenerator {
     const { text, imports } = this.jsonSchemaToTSString(name, schema, 0)
 
     if (imports.size) {
-      lines.push(`import { ${[...imports].join(', ')} } from '.'`, '')
+      lines.push(`import { ${[...imports].sort().join(', ')} } from '.'`, '')
     }
 
     lines.push(text)
@@ -351,7 +351,7 @@ class JsonSchemaToTSGenerator {
     }
 
     if (isConstSchema(schema)) {
-      const text = typeof schema.const === 'string' ? `'${schema.const}'` : schema.const
+      const text = typeof schema.const === 'string' ? `'${schema.const}'` : String(schema.const)
 
       if (level === 0) {
         return { imports, tags, text: `export type ${name} = ${text}` }
@@ -369,8 +369,6 @@ class JsonSchemaToTSGenerator {
     throw new Error(`unknown schema ${name}`)
   }
 }
-
-// todo: run over Prettier in the end? why not? Same for json-schema json files (more compact and readable!)
 
 function generateJSDoc(tags: StringMap<string | number>): string {
   if (!Object.keys(tags).length) return ''
@@ -402,7 +400,7 @@ function getSchemaTags(s: JsonSchema): StringMap<string | number> {
   }
 
   if (s.default) {
-    tags['default'] = s.default
+    tags['default'] = String(s.default)
   }
 
   if (s.deprecated) {
