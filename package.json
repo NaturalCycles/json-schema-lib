@@ -40,7 +40,7 @@
   "engines": {
     "node": ">=14.16.0"
   },
-  "version": "0.0.0",
+  "version": "1.10.0",
   "description": "JSON schema to/from TypeScript parser/generator",
   "keywords": [
     "json-schema",
