@@ -78,3 +78,7 @@ Typescript AST debugging: https://ts-ast-viewer.com/
 - `typeof`
 - `keyof`
 - Conditional types
+
+## generateJsonSchemaFromData
+
+This function is able to generate a JsonSchema given an array of data samples (objects).
