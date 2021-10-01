@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/NaturalCycles/json-schema-lib/compare/v1.11.0...v1.11.1) (2021-10-01)
+
+
+### Bug Fixes
+
+* generateJsonSchemaFromData moved to js-lib ([d13e5ba](https://github.com/NaturalCycles/json-schema-lib/commit/d13e5ba17f7b3eae752b602b2c1354f117415901))
+
 # [1.11.0](https://github.com/NaturalCycles/json-schema-lib/compare/v1.10.0...v1.11.0) (2021-10-01)
 
 
